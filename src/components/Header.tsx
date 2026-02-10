@@ -33,7 +33,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           
           {/* LOGO */}
-          <Link href="/" className="text-3xl font-serif font-bold text-primary">
+          <Link href="/" className="text-3xl font-serif font-bold text-primary cursor-wait">
             Serender House
           </Link>
 
