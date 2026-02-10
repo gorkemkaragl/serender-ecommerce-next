@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react"; // İkon
 
 export default function Hero() {
   return (
-    <section className="w-full px-6 py-12 md:py-20 max-w-7xl mx-auto">
+    <section className="w-full px-6 py-8 md:py-12 max-w-7xl mx-auto">
       
       {/*ÜST METİN ALANI (GRID YAPISI) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-12">

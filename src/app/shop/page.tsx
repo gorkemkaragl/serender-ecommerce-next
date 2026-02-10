@@ -1,120 +1,117 @@
 "use client";
 
 import { useState } from "react";
-import { PRODUCTS } from "@/lib/data";
+import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  
+  // Tip: string (bir ID) olabilir veya null olabilir.
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
-  // Kategorileri dinamik olarak veriden çekiyoruz (Tekrar edenleri silerek)
-  const categories = ["All", ...new Set(PRODUCTS.map((p) => p.category))];
+  // TSX içinde "All" butonunu ayrı yazmamak için listeleri burada birleştiriyoruz.
+  const filterOptions = [
+    { id: null, name: "All" }, // En başa "All" seçeneğini ekledik
+    ...CATEGORIES              // Devamına gerçek kategorileri koyduk
+  ];
 
-  // FİLTRELEME MANTIĞI
   const filteredProducts = PRODUCTS.filter((product) => {
-    // 1. Kategori Uyumu
-    const categoryMatch = selectedCategory === "All" || product.category === selectedCategory;
+    // Mantık: Eğer selectedCategoryId 'null' ise (yani hepsi) TRUE dön.
+    // Değilse, ID eşleşiyor mu diye bak.
+    const categoryMatch = !selectedCategoryId || product.categoryId === selectedCategoryId;
     
-    // 2. Arama Uyumu (Büyük/küçük harf duyarsız)
     const searchMatch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-
     return categoryMatch && searchMatch;
   });
 
+  // Helper: Filtreleri temizleme fonksiyonu
+  const clearFilters = () => {
+    setSelectedCategoryId(null);
+    setSearchQuery("");
+  };
+
   return (
-    <div className="w-full px-6 py-12 md:py-20 max-w-7xl mx-auto">
+    <div className="w-full px-6 py-8 md:py-12 max-w-7xl mx-auto">
       <div className="max-w-7xl mx-auto">
         
-        {/* BAŞLIK ALANI */}
-        <div className="mb-10 text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">
-            Shop All Products
-          </h1>
-          <p className="text-custom-black/60 text-lg">
-            Browse our wide selection of organic and fresh products.
+        {/* BAŞLIK */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-serif text-primary mb-3">The Market</h1>
+          <p className="text-custom-black/50 font-sans text-sm tracking-wide uppercase">
+            Curated Selection of Organic Goods
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10">
+        {/* NAVİGASYON VE ARAMA */}
+        <div className="flex flex-col md:flex-row justify-between items-center  mb-16 border-b border-primary/10 pb-4">
           
-          {/* 1. SOL SIDEBAR (FİLTRELER) */}
-          <aside className="w-full md:w-64 space-y-8 shrink-0">
-            
-            {/* Arama Kutusu */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-              <Input 
-                placeholder="Search products..." 
-                className="pl-10 bg-white border-primary/20 focus-visible:ring-primary"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
+          {/* 3. SADELEŞTİRİLMİŞ MENÜ YAPISI */}
+          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
+            {filterOptions.map((option) => {
+              const isActive = selectedCategoryId === option.id;
+              
+              return (
+                <Button
+                variant="outline"
+                  key={option.id ?? "all"} // id null ise key olarak 'all' kullan
+                  onClick={() => setSelectedCategoryId(option.id)}
+                  className={`
+                     transition-all duration-300 relative whitespace-nowrap 
+                    ${isActive 
+                      ? "text-primary " 
+                      : "text-custom-black/40 hover:text-primary/70 "
+                    }
+                  `}
+                >
+                  {option.name}
+                  {/* Aktiflik Çizgisi */}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-primary block rounded-full" />
+                  )}
+                </Button>
+              );
+            })}
+          </div>
 
-            {/* Kategori Listesi */}
-            <div>
-              <h3 className="font-serif text-xl font-bold text-primary mb-4">Categories</h3>
-              <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`text-left px-4 py-2 rounded-lg transition-all whitespace-nowrap ${
-                      selectedCategory === category
-                        ? "bg-primary text-white font-medium shadow-md"
-                        : "hover:bg-primary/10 text-custom-black/70"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Filtreleri Temizle (Sadece filtre aktifse göster) */}
-            {(selectedCategory !== "All" || searchQuery) && (
-              <Button 
-                variant="outline" 
-                className="w-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600 gap-2"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("All");
-                }}
-              >
-                <X size={16} /> Clear Filters
-              </Button>
+          {/* ARAMA  */}
+          <div className="relative w-full md:w-64 group">
+            <input 
+              type="text"
+              placeholder="Search..." 
+              className="w-full bg-transparent border-b border-primary/20 py-2 pl-0 pr-8 text-custom-black focus:outline-none focus:border-primary transition-colors placeholder:text-custom-black/30 text-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute right-0 top-1/2 -translate-y-1/2 text-custom-black/30 group-focus-within:text-primary transition-colors pointer-events-none" size={16} />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery("")} className="absolute right-6 top-1/2 -translate-y-1/2 text-red-400 hover:text-red-600">
+                <X size={14} />
+              </button>
             )}
-          </aside>
-
-          {/* 2. SAĞ TARAF (ÜRÜN LİSTESİ) */}
-          <main className="flex-1">
-            
-            {/* Sonuç Sayısı */}
-            <p className="text-sm text-custom-black/50 mb-6">
-              Showing {filteredProducts.length} results
-            </p>
-
-            {/* Ürün Yoksa Mesaj Göster */}
-            {filteredProducts.length === 0 ? (
-              <div className="text-center py-20 bg-white/50 rounded-2xl border border-dashed border-primary/20">
-                <h3 className="text-xl font-serif text-custom-black mb-2">No products found</h3>
-                <p className="text-custom-black/60">Try adjusting your search or filter to find what you're looking for.</p>
-              </div>
-            ) : (
-              /* Ürün Grid */
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            )}
-          </main>
-
+          </div>
         </div>
+
+        {/* ÜRÜN LİSTESİ */}
+        <main>
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-20 opacity-60">
+              <p className="font-serif text-lg">No products found.</p>
+              <button onClick={clearFilters} className="text-xs uppercase tracking-widest border-b border-custom-black mt-2">
+                Clear Filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </main>
+
       </div>
     </div>
   );

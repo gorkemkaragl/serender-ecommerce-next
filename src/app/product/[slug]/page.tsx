@@ -26,7 +26,7 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <div className="min-h-screen bg-secondary pb-20 pt-10">
+    <div className="w-full px-6 py-8 md:py-12 max-w-7xl mx-auto">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
         
         {/* SOL TARAF: GÖRSEL */}
