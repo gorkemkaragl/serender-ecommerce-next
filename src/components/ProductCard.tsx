@@ -5,6 +5,7 @@ import { Heart, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Product } from "@/types/product"; 
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -16,7 +17,9 @@ export default function ProductCard({ product }: ProductCardProps) {
       
       {/* GÖRSEL ALANI */}
       <CardContent className="p-0 relative aspect-square rounded-2xl overflow-hidden bg-neutral-light mb-4">
-        
+        {/* Link eklendi: slug'a göre dinamik adres */}
+  <Link href={`/product/${product.slug}`}>
+  
         {/* Favori Butonu (Sağ Üst) */}
         <Button 
           variant="ghost" 
@@ -40,6 +43,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             New
           </span>
         )}
+        </Link>
       </CardContent>
 
       {/*  BİLGİ ALANI */}

@@ -1,29 +1,34 @@
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/types/product";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface ProductListProps {
   title: string;
-  products: Product[]; 
+  products: Product[];
 }
 
 export default function ProductList({ title, products }: ProductListProps) {
   return (
     <section className="max-w-7xl mx-auto px-6 py-12">
-      
       {/* BAŞLIK VE AKSİYON ALANI */}
       <div className="flex justify-between items-end mb-8">
         <div>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-2">
             {title}
           </h2>
-          <p className="text-custom-black/60">Fresh and healthy choices for you.</p>
+          <p className="text-custom-black/60">
+            Fresh and healthy choices for you.
+          </p>
         </div>
-        
+
         {/* Desktop'ta görünen buton */}
-        <Button variant="link" className="hidden md:block ">
+        <Link
+          href="/shop"
+          className="hidden md:block text-primary font-medium hover:underline transition"
+        >
           View All Products →
-        </Button>
+        </Link>
       </div>
 
       {/* GRID YAPISI */}
@@ -32,14 +37,13 @@ export default function ProductList({ title, products }: ProductListProps) {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      
+
       {/* Mobil Buton */}
       <div className="mt-8 text-center md:hidden">
-        <Button variant="link" >
-            View All Products →
-        </Button>
+        <Link href="/shop" className="text-primary font-medium hover:underline transition">
+          View All Products →
+        </Link>
       </div>
-
     </section>
   );
 }
