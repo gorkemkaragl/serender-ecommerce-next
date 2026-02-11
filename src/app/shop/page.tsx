@@ -46,7 +46,7 @@ export default function ShopPage() {
         </div>
 
         {/* NAVİGASYON VE ARAMA */}
-        <div className="flex flex-col md:flex-row justify-between items-center  mb-16 border-b border-primary/10 pb-4">
+        <div className="flex flex-col md:flex-row justify-between items-center  mb-12 border-b border-primary/10 pb-4">
           
           {/* 3. SADELEŞTİRİLMİŞ MENÜ YAPISI */}
           <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
@@ -97,7 +97,7 @@ export default function ShopPage() {
         {/* ÜRÜN LİSTESİ */}
         <main>
           {filteredProducts.length === 0 ? (
-            <div className="text-center py-20 opacity-60">
+            <div className="text-center opacity-60">
               <p className="font-serif text-lg">No products found.</p>
               <button onClick={clearFilters} className="text-xs uppercase tracking-widest border-b border-custom-black mt-2">
                 Clear Filters

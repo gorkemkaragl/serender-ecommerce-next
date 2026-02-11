@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware"; // Veriyi localStorage'a kaydeder 
+import { persist } from "zustand/middleware"; // Veriyi localStorage'a kaydeder
 import { Product } from "@/types/product";
 
 // Sepetteki ürünün tipi (Normal üründen farkı: 'quantity' ekliyoruz)
@@ -9,7 +9,7 @@ export interface CartItem extends Product {
 
 interface CartState {
   items: CartItem[];
-  addItem: (product: Product) => void;
+  addItem: (product: Product, count?: number) => void;
   removeItem: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
@@ -23,22 +23,25 @@ export const useCartStore = create<CartState>()(
       items: [],
 
       // Ürün Ekleme Mantığı
-      addItem: (product) => {
+      // count varsayılan olarak 1
+      addItem: (product, count = 1) => {
         const currentItems = get().items;
-        const existingItem = currentItems.find((item) => item.id === product.id);
+        const existingItem = currentItems.find(
+          (item) => item.id === product.id,
+        );
 
         if (existingItem) {
-          // Ürün zaten varsa miktarını artır
+          // Varsa üzerine 'count' kadar ekle
           set({
             items: currentItems.map((item) =>
               item.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
+                ? { ...item, quantity: item.quantity + count }
+                : item,
             ),
           });
         } else {
-          // Yoksa yeni ekle (miktar 1)
-          set({ items: [...currentItems, { ...product, quantity: 1 }] });
+          // Yoksa yeni ekle (miktar 'count' kadar)
+          set({ items: [...currentItems, { ...product, quantity: count }] });
         }
       },
 
@@ -51,7 +54,7 @@ export const useCartStore = create<CartState>()(
       increaseQuantity: (id) => {
         set({
           items: get().items.map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+            item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
           ),
         });
       },
@@ -68,7 +71,7 @@ export const useCartStore = create<CartState>()(
           // Değilse azalt
           set({
             items: currentItems.map((item) =>
-              item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+              item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
             ),
           });
         }
@@ -78,11 +81,14 @@ export const useCartStore = create<CartState>()(
 
       // Toplam Fiyat Hesaplama
       totalPrice: () => {
-        return get().items.reduce((total, item) => total + item.price * item.quantity, 0);
+        return get().items.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0,
+        );
       },
     }),
     {
       name: "food-cart", // localStorage'da bu isimle saklanacak
-    }
-  )
+    },
+  ),
 );

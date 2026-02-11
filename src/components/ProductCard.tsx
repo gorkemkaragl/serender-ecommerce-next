@@ -34,12 +34,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
   
   return (
-    <Card className="border-none shadow-none bg-transparent group relative overflow-hidden">
+    <Card className=" bg-white/50 p-4 shadow-2xl group relative overflow-hidden">
       {/* GÖRSEL ALANI */}
-      <CardContent className="p-0 relative aspect-square rounded-2xl overflow-hidden bg-neutral-light mb-4">
+      <CardContent className="p-0 relative aspect-square rounded-xl overflow-hidden bg-neutral-light mb-4">
         {/* Link eklendi: slug'a göre dinamik adres */}
-        <Link href={"/"}>
-          {/* Favori Butonu (Sağ Üst) */}
+        {/* Favori Butonu (Sağ Üst) */}
           <Button
             variant="ghost"
             className="absolute top-3 right-3 z-10 bg-white/80 p-2 rounded-full hover:bg-white hover:text-red-500 transition shadow-sm"
@@ -47,6 +46,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             <Heart size={18} />
           </Button>
+        <Link href={`/product/${product.slug}`} >
+          
 
           {/* Ürün Resmi */}
           <Image
@@ -84,10 +85,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* AKSİYON BUTONU */}
       <CardFooter className="p-0 mt-4">
         <Button 
-          className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-medium tracking-wide shadow-md hover:shadow-lg transition-all"
+          variant="default"
           onClick={handleAddToCart} 
         >
-          Add to Cart
+          Add to Cart <ShoppingBag size={20} />
         </Button>
       </CardFooter>
     </Card>
