@@ -12,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import CartSheet from "./CartSheet";
 
 export default function Header() {
   const navLinks = [
@@ -59,15 +60,7 @@ export default function Header() {
             </Button>
 
             {/* Sepet İkonu ve Badge */}
-            <Button variant="ghost" size="icon" className="relative" aria-label="Cart">
-              <ShoppingBag className="h-5 w-5" />
-              <Badge 
-                className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-[10px] rounded-full" 
-                variant="destructive" 
-              >
-                0
-              </Badge>
-            </Button>
+            <CartSheet />
 
             {/* MOBILE MENU (SHEET) */}
             <Sheet>
