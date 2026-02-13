@@ -13,6 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import CartSheet from "./CartSheet";
+import WishlistSheet from "./WishlistSheet";
 
 export default function Header() {
   const navLinks = [
@@ -55,9 +56,7 @@ export default function Header() {
               <User className="h-5 w-5" />
             </Button>
             
-            <Button variant="ghost" size="icon" aria-label="Favorites">
-              <Heart className="h-5 w-5" />
-            </Button>
+            <WishlistSheet/>
 
             {/* Sepet İkonu ve Badge */}
             <CartSheet />

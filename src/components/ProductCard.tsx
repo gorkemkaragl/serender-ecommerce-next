@@ -8,6 +8,7 @@ import { Product } from "@/types/product";
 import Link from "next/link";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
+import { useWishlistStore } from "@/store/wishlist-store";
 
 interface ProductCardProps {
   product: Product;
@@ -15,6 +16,28 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, hasItem } = useWishlistStore();
+
+  const isFavorite = hasItem(product.id); // Bu ürün favoride mi?
+
+  // Favori Butonu Tıklama Fonksiyonu
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault(); // Sayfa yönlenmesini engelle
+    e.stopPropagation();
+
+    if (isFavorite) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+      toast("Added to Wishlist ❤️",{
+        description: `${product.name} saved for later.`,
+        style: {
+          background: "var(--primary)",
+          color: "var(--primary-foreground)",
+        },
+      });
+    }
+  };
 
   // Sepete Ekleme Fonksiyonu
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -39,12 +62,19 @@ export default function ProductCard({ product }: ProductCardProps) {
       <CardContent className="p-0 relative aspect-square rounded-xl overflow-hidden bg-neutral-light mb-4">
         {/* Link eklendi: slug'a göre dinamik adres */}
         {/* Favori Butonu (Sağ Üst) */}
-          <Button
-            variant="ghost"
-            className="absolute top-3 right-3 z-10 bg-white/80 p-2 rounded-full hover:bg-white hover:text-red-500 transition shadow-sm"
-            onClick={() => alert(`${product.name} favorilere eklendi!`)} // Şimdilik alert verelim
+          <Button 
+          variant="secondary"
+            onClick={toggleFavorite}
+            size="icon-sm"
+            className={`absolute top-3 right-3 z-10  rounded-full transition 
+              ${isFavorite 
+                ? " text-red-500" // Favoriyse Kırmızı
+                : "bg-white/80 hover:bg-white hover:text-red-500 text-custom-black" // Değilse Normal
+              }
+            `}
           >
-            <Heart size={18} />
+            {/* fill={isFavorite ? "currentColor" : "none"} -> İçi dolu kalp yapar */}
+            <Heart  fill={isFavorite ? "currentColor" : "none"} />
           </Button>
         <Link href={`/product/${product.slug}`} >
           

@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter, Mail, MapPin, Phone } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="bg-primary text-white pt-16 pb-8 mt-auto">
+    <footer className="bg-primary text-white pt-16 pb-8 mt-18">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* ÜST KISIM (GRID LAYOUT) */}

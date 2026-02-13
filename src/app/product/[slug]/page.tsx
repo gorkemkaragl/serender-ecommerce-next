@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Heart, Minus, Plus, ShoppingBag } from "lucide-react";
 import ProductActions from "@/components/ProductActions";
+import RelatedProducts from "@/components/RelatedProducts";
 
 //  Fonksiyonu 'async' yapıyoruz
 //  params tipini Promise olarak güncelliyoruz
@@ -99,6 +100,7 @@ export default async function ProductDetailPage({
           </div>
         </div>
       </div>
+      <RelatedProducts currentProduct={product}></RelatedProducts>
     </div>
   );
 }

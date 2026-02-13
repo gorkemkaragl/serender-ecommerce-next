@@ -1,21 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Product } from "@/types/product";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Minus, Plus, Heart } from "lucide-react";
+import { useWishlistStore } from "@/store/wishlist-store";
 
 interface ProductActionsProps {
   product: Product;
 }
 
 export default function ProductActions({ product }: ProductActionsProps) {
+  // MOUNT KONTROLÜ İÇİN STATE
+  const [isMounted, setIsMounted] = useState(false);
   //  Yerel State: Kullanıcı kaç tane seçti? (Varsayılan 1)
   const [count, setCount] = useState(1);
 
   const addItem = useCartStore((state) => state.addItem);
+  const {
+    addItem: addToWishlist,
+    removeItem: removeFromWishlist,
+    hasItem,
+  } = useWishlistStore();
+
+// COMPONENT YÜKLENDİĞİNDE MOUNTED'I TRUE YAP
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Eğer mount olmadıysa (sunucudaysa) false döner, mount olduysa store'a bakar.
+  const isFavorite = isMounted ? hasItem(product.id) : false;
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+      toast("Added to Wishlist ❤️", {
+        description: `${product.name} saved for later.`,
+        style: {
+          background: "var(--primary)",
+          color: "var(--primary-foreground)",
+        },
+      });
+    }
+  };
+
 
   // Miktar Artır
   const increment = () => setCount((prev) => prev + 1);
@@ -70,9 +102,21 @@ export default function ProductActions({ product }: ProductActionsProps) {
         Add to Cart <ShoppingBag />
       </Button>
 
-      {/* FAVORİ BUTONU (Şimdilik işlevsiz) */}
-      <Button variant="outline" size="icon-lg" className="rounded-full">
-        <Heart />
+      {/* FAVORİ BUTONU */}
+
+      <Button
+        variant="outline"
+        size="icon-lg"
+        onClick={toggleFavorite}
+        className={`rounded-full transition-colors 
+          ${
+            isFavorite
+              ? "  text-red-500 border-red-200  hover:text-red-700"
+              : "text-custom-black "
+          }
+        `}
+      >
+        <Heart  fill={isFavorite ? "currentColor" : "none"} />
       </Button>
     </div>
   );
