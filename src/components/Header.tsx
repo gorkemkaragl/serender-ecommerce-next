@@ -15,6 +15,7 @@ import {
 import CartSheet from "./CartSheet";
 import WishlistSheet from "./WishlistSheet";
 import { CATEGORIES } from "@/lib/data";
+import SearchButton from "./SearchButton";
 
 export default function Header() {
   const pathname = usePathname();
@@ -41,7 +42,7 @@ export default function Header() {
           {/* LOGO */}
           <Link
             href="/"
-            className="text-3xl font-serif font-bold text-primary cursor-default"
+            className="text-3xl font-serif font-bold text-primary cursor-default "
           >
             Serender House
           </Link>
@@ -63,9 +64,8 @@ export default function Header() {
 
           {/* ICONS (Sağ Kısım) */}
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" aria-label="User Account">
-              <User className="h-5 w-5" />
-            </Button>
+            <SearchButton/>
+            
 
             <WishlistSheet />
 
@@ -86,7 +86,6 @@ export default function Header() {
                     Serender House
                   </SheetTitle>
                 </SheetHeader>
-
                 <div className="flex flex-col mt-8 gap-4">
                   {navLinks.map((link) => (
                     <div key={link.name} className="flex flex-col">
@@ -100,8 +99,6 @@ export default function Header() {
                     </div>
                   ))}
 
-                  {/* Mobilde ikonları da menü içine ekleyebilirsin veya yukarıda bırakabilirsin. 
-                      Burada örnek olarak ek butonlar koydum */}
                   <div className="mt-4 flex gap-4">
                     <Button className="w-full">Sign In</Button>
                   </div>
