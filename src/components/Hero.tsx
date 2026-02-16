@@ -1,74 +1,170 @@
+"use client";
+
+import * as React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button"; // Shadcn butonu
-import { ArrowRight } from "lucide-react"; // İkon
 import Link from "next/link";
+import Autoplay from "embla-carousel-autoplay";
+import { ArrowRight, Leaf } from "lucide-react";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
+
+// Slayt Verileri (Görselleri değiştirebilirsin)
+const HERO_SLIDES = [
+  {
+    id: 1,
+    title: "Fresh & Organic Food from Farm to Table.",
+    description:
+      "Experience the true taste of nature with our daily harvested vegetables and fruits. No chemicals, just pure love.",
+    image:
+      "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop",
+    cta: "Shop Now",
+    link: "/shop",
+    badge: "100% Organic",
+  },
+  {
+    id: 2,
+    title: "Delivery to Your Doorstep in 24 Hours.",
+    description:
+      "Don't wait for freshness. Order now and get your eco-friendly box delivered by our electric fleet tomorrow.",
+    image:
+      "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Kurye/Paket görseli
+    cta: "View Delivery",
+    link: "/delivery",
+    badge: "Fast Shipping",
+  },
+  {
+    id: 3,
+    title: "Weekly Boxes Curated Just for You.",
+    description:
+      "Subscribe to our seasonal boxes and save up to 20%. The best way to eat healthy and support local farmers.",
+    image:
+      "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop", // Çiftçi/Kutu görseli
+    cta: "Subscribe",
+    link: "/shop?category=boxes",
+    badge: "Save 20%",
+  },
+];
 
 export default function Hero() {
+  // Autoplay Plugin Ayarı
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true }),
+  );
+
   return (
-    <section className="w-full px-6 py-8 md:py-12 max-w-7xl mx-auto">
-      {/*ÜST METİN ALANI (GRID YAPISI) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-12">
-        {/* Sol Taraf: Büyük Başlık */}
-        <h1 className="text-4xl md:text-6xl font-serif font-bold text-primary sm:leading-13">
-          Premium Food & <br />
-          Beverages at Your Doorstep
-        </h1>
+    <section className="bg-secondary relative overflow-hidden md:py-8">
+      
 
-        {/* Sağ Taraf: Açıklama Metni */}
-        <div className="flex flex-col gap-4 md:pl-10">
-          <p className="text-lg text-custom-black/80 font-sans leading-relaxed">
-            Discover high-quality products, place your order online, and enjoy
-            fast, reliable delivery right to your home.
-          </p>
+      <div className=" max-w-7xl mx-auto px-6 py-12 md:py-20 lg:py-0">
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+        >
+          {/* Navigasyon Okları (Sadece Desktop) */}
 
-          {/* Action Butonları */}
-          <div className="flex gap-4">
-            <Link href="/shop">
-              <Button size="lg" className="rounded-full px-8 text-white">
-                Shop Now
-              </Button>
-            </Link>
-            <Link href="/delivery">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full gap-2 border-primary text-primary hover:bg-primary/10"
-              >
-                Delivery Info <ArrowRight size={18} />
-              </Button>
-            </Link>
+          <div className="hidden lg:block">
+            <CarouselPrevious className=" bg-white/50 hover:bg-white border-none" />
+            <CarouselNext className=" bg-white/50 hover:bg-white border-none" />
           </div>
-        </div>
-      </div>
+          <CarouselContent>
+            {HERO_SLIDES.map((slide) => (
+              <CarouselItem key={slide.id}>
+                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-125 md:min-h-162.5">
+                  {/* SOL TARA: METİN ALANI */}
+                  <div className="space-y-8 px-2 relative z-10 order-2 lg:order-1 text-center lg:text-left">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-primary/10 px-4 py-1.5 rounded-full text-primary text-sm font-bold tracking-wide uppercase shadow-sm">
+                      <Leaf size={14} />
+                      {slide.badge}
+                    </div>
 
-      {/*BÜYÜK BANNER GÖRSELİ */}
-      <div className="relative w-full h-75 md:h-125 rounded-3xl overflow-hidden bg-neutral-light shadow-xl">
-        {/* Arkaplan Resmi */}
-        <Image
-          src="https://images.unsplash.com/photo-1506484381205-f7945653044d?q=80&w=2070&auto=format&fit=crop"
-          alt="Healthy Food Box"
-          fill
-          className="object-cover opacity-90"
-          priority // Bu resim sayfanın en üstünde olduğu için hemen yüklensin (LCP Optimizasyonu)
-        />
+                    {/* Başlık */}
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-custom-black leading-[1.1]">
+                      {slide.title.split(" ").map((word, i) => (
+                        <span
+                          key={i}
+                          className={i % 3 === 1 ? "text-primary" : ""}
+                        >
+                          {word}{" "}
+                        </span>
+                      ))}
+                    </h1>
 
-        {/* ORTADAKİ "SPECIAL OFFER" METNİ (OVERLAY) */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-sm max-w-lg">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-primary mb-2">
-              SPECIAL OFFER
-            </h2>
-            <p className="text-xl font-sans font-medium text-custom-black mb-4">
-              FIRST ORDER <span className="text-primary font-bold">-20%</span>
-            </p>
-            <div className="inline-block bg-secondary px-4 py-2 rounded-lg border border-primary/20">
-              <span className="text-xs uppercase tracking-widest text-custom-black/60 mr-2">
-                Promo Code:
-              </span>
-              <span className="font-bold text-primary">WELCOME20</span>
-            </div>
-          </div>
-        </div>
+                    {/* Açıklama */}
+                    <p className="text-lg text-custom-black/60 font-sans max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                      {slide.description}
+                    </p>
+
+                    {/* Butonlar */}
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                      <Link href={slide.link}>
+                        <Button
+                          variant="default"
+                          size="lg"
+                          className="  text-lg font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all  "
+                        >
+                          {slide.cta} <ArrowRight className="ml-2 w-5 h-5" />
+                        </Button>
+                      </Link>
+
+                      <Link href="/about">
+                        <Button
+                          variant="outline"
+                          size="lg"
+                          className="    text-lg font-medium "
+                        >
+                          Our Story
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* SAĞ TARA: GÖRSEL ALANI */}
+                  <div className="relative h-75 md:h-125 lg:h-150 w-full order-1 lg:order-2">
+                    {/* Görsel Çerçevesi (Modern Blob/Shape Efekti) */}
+                    <div className="absolute inset-0 bg-primary/5 rounded-[3rem] transform rotate-3 scale-95"></div>
+                    <div className="absolute inset-0 bg-white/40 rounded-[3rem] transform -rotate-2 scale-95"></div>
+
+                    {/* Ana Görsel */}
+                    <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden ">
+                      <Image
+                        src={slide.image}
+                        alt={slide.title}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-1000"
+                        priority={slide.id === 1} // İlk resim hızlı yüklensin
+                      />
+                    </div>
+
+                    {/* Süsleme Kartı (Floating Card) */}
+                    <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-2xl hidden md:flex items-center gap-4 animate-bounce-slow">
+                      <div className="bg-green-100 p-3 rounded-full text-green-600">
+                        <Leaf size={24} />
+                      </div>
+                      <div>
+                        <p className="font-bold text-custom-black text-sm">
+                          100% Fresh
+                        </p>
+                        <p className="text-xs text-custom-black/50">
+                          Quality Guaranteed
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
       </div>
     </section>
   );

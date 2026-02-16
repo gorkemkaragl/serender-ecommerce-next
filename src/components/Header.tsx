@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Menu } from "lucide-react";
+import { User, Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -32,8 +32,39 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-50">
       {/* TOP BAR */}
-      <div className="bg-primary text-primary-foreground text-xs md:text-sm py-2 text-center font-medium tracking-wide">
-        Weekend Special: -10% on all frozen products!
+      <div className="bg-primary text-white py-2 text-[11px] md:text-xs tracking-wide ">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          {/* SOL TARA: Duyuru (Mobilde gizlenebilir veya kısaltılabilir) */}
+          <p className=" font-medium opacity-90 hidden md:block">
+            Free shipping on orders over <span className="font-bold">$50</span>
+          </p>
+          <p className="font-medium opacity-90 md:hidden">
+            Free shipping over $50
+          </p>
+
+          {/* SAĞ TARA: Giriş / Üye Ol / Dil Seçimi */}
+          <div className="flex items-center gap-4 md:gap-6">
+            {/* Giriş / Kayıt */}
+            <div className="flex items-center gap-2">
+              <Link
+                href="/login"
+                className="flex items-center gap-1.5 hover:opacity-80 transition-opacity font-medium"
+              >
+                <User size={12} />
+                <span>Log In</span>
+              </Link>
+
+              <span className="opacity-30">|</span>
+
+              <Link
+                href="/register"
+                className="hover:opacity-80 transition-opacity font-medium"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* MAIN NAVBAR */}
@@ -64,8 +95,7 @@ export default function Header() {
 
           {/* ICONS (Sağ Kısım) */}
           <div className="flex items-center space-x-2">
-            <SearchButton/>
-            
+            <SearchButton />
 
             <WishlistSheet />
 
@@ -138,11 +168,11 @@ export default function Header() {
                   className="flex items-center gap-1 group relative px-2 py-4 text-xs md:text-sm font-semibold tracking-tight  transition-all duration-300 hover:text-primary"
                 >
                   {/* İKON ALANI */}
-                        <div className="p-1.5 rounded-full   group-hover:bg-primary group-hover:text-white transition-colors">
-                          <cat.icon size={16}  /> 
-                        </div>
+                  <div className="p-1.5 rounded-full   group-hover:bg-primary group-hover:text-white transition-colors">
+                    <cat.icon size={16} />
+                  </div>
                   {/* Kategori Metni */}
-                  <span >{cat.name}</span>
+                  <span>{cat.name}</span>
 
                   {/* Hover Alt Çizgi Efekti (Borders yerine daha modern bir yaklaşım) */}
                   <span className="absolute inset-x-2 bottom-1.5 h-0.5 scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />

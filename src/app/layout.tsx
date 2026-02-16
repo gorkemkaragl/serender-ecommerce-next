@@ -4,18 +4,19 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/Footer";
+import { Leaf } from "lucide-react";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter" 
+  variable: "--font-inter",
 });
 
-const dmSerif = DM_Serif_Display({ 
+const dmSerif = DM_Serif_Display({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-dm-serif" 
+  variable: "--font-dm-serif",
 });
 
 export const metadata: Metadata = {
@@ -30,15 +31,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${dmSerif.variable} antialiased`}
-      >
-        <Header/>
+      <body className={`${inter.variable} ${dmSerif.variable} antialiased`}>
+        <Header />
+        {/* Dekoratif Arka Plan (Hafif Yaprak Deseni) */}
+        <div className="absolute z-1 top-40 left-0 w-full h-full opacity-5 pointer-events-none">
+          <div className="absolute top-10 left-10 transform -rotate-12">
+            <Leaf size={100} />
+          </div>
+          <div className="absolute bottom-10 right-10 transform rotate-45">
+            <Leaf size={150} />
+          </div>
+          
+        </div>
         <main className="min-h-screen">
           {children}
           <Toaster />
         </main>
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
