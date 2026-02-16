@@ -11,6 +11,15 @@ import {
 import { Heart, Minus, Plus, ShoppingBag } from "lucide-react";
 import ProductActions from "@/components/ProductActions";
 import RelatedProducts from "@/components/RelatedProducts";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 
 //  Fonksiyonu 'async' yapıyoruz
 //  params tipini Promise olarak güncelliyoruz
@@ -35,9 +44,9 @@ export default async function ProductDetailPage({
     <div className="w-full px-6 py-8 md:py-12 max-w-7xl mx-auto">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* SOL TARAF: GÖRSEL */}
-        <div className="relative aspect-square rounded-xl overflow-hidden  border-4 border-accent shadow-xl">
+        <div className="relative aspect-square rounded-xl overflow-hidden   shadow-2xl shadow-black/70">
           {product.isNew && (
-            <span className="absolute top-4 left-4 z-10 bg-primary text-white px-3 py-1 rounded text-sm font-bold">
+            <span className="absolute top-4 left-4 z-10 bg-primary border border-white/30 text-white px-3 py-1 rounded text-sm font-bold">
               NEW
             </span>
           )}
@@ -52,10 +61,26 @@ export default async function ProductDetailPage({
 
         {/* SAĞ TARAF: DETAYLAR */}
         <div className="flex flex-col justify-center space-y-6">
-          <div className="text-sm text-custom-black/50">
-            Home / Shop /{" "}
-            <span className="text-custom-black">{product.name}</span>
-          </div>
+          
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/shop">Shop</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{product.name}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
 
           <div>
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-2">

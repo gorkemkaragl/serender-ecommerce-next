@@ -78,7 +78,7 @@ export default function Hero() {
           <CarouselContent>
             {HERO_SLIDES.map((slide) => (
               <CarouselItem key={slide.id}>
-                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-125 md:min-h-162.5">
+                <div className=" grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-125 md:min-h-150">
                   {/* SOL TARA: METİN ALANI */}
                   <div className="space-y-8 px-2 relative z-10 order-2 lg:order-1 text-center lg:text-left">
                     {/* Badge */}
@@ -129,24 +129,24 @@ export default function Hero() {
                   </div>
 
                   {/* SAĞ TARA: GÖRSEL ALANI */}
-                  <div className="relative h-75 md:h-125 lg:h-150 w-full order-1 lg:order-2">
+                  <div className="relative h-75 md:h-125  w-full order-1 lg:order-2">
                     {/* Görsel Çerçevesi (Modern Blob/Shape Efekti) */}
-                    <div className="absolute inset-0 bg-primary/5 rounded-[3rem] transform rotate-3 scale-95"></div>
-                    <div className="absolute inset-0 bg-white/40 rounded-[3rem] transform -rotate-2 scale-95"></div>
+                    <div className="absolute inset-0 bg-accent rounded-[3rem] transform rotate-8 scale-95"></div>
+                    <div className="absolute inset-0 bg-primary/50  rounded-[3rem] transform -rotate-8 scale-95"></div>
 
                     {/* Ana Görsel */}
-                    <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden ">
+                    <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden">
                       <Image
                         src={slide.image}
                         alt={slide.title}
                         fill
-                        className="object-cover hover:scale-105 transition-transform duration-1000"
+                        className="object-cover hover:scale-105 transition-transform duration-1000 "
                         priority={slide.id === 1} // İlk resim hızlı yüklensin
                       />
                     </div>
 
                     {/* Süsleme Kartı (Floating Card) */}
-                    <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-2xl hidden md:flex items-center gap-4 animate-bounce-slow">
+                    <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-lg shadow-black/75 hidden md:flex items-center gap-4 animate-bounce-slow">
                       <div className="bg-green-100 p-3 rounded-full text-green-600">
                         <Leaf size={24} />
                       </div>
