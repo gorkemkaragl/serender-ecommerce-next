@@ -1,17 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import { Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
 
 export default function ShopPage() {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const urlCategoryId = searchParams.get("category");
   
   // Tip: string (bir ID) olabilir veya null olabilir.
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
+  // URL DEĞİŞİNCE STATE'İ GÜNCELLE
+  // Kullanıcı Header'dan başka kategoriye basarsa sayfa yenilenmeden burası çalışır
+  useEffect(() => {
+    if (urlCategoryId) {
+      setSelectedCategoryId(urlCategoryId);
+    } else {
+      // Eğer URL'de kategori yoksa (sadece /shop ise) 'null' yapma, 
+      // belki kullanıcı elle 'All' seçmiştir. O yüzden burayı boş bırakabiliriz 
+      // veya varsayılan davranışa göre ayarlayabiliriz.
+      // Şimdilik URL'den geleni önceliklendiriyoruz.
+    }
+  }, [urlCategoryId]);
   // TSX içinde "All" butonunu ayrı yazmamak için listeleri burada birleştiriyoruz.
   const filterOptions = [
     { id: null, name: "All" }, // En başa "All" seçeneğini ekledik
@@ -38,9 +53,9 @@ export default function ShopPage() {
       <div className="max-w-7xl mx-auto">
         
         {/* BAŞLIK */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-serif text-primary mb-3">The Market</h1>
-          <p className="text-custom-black/50 font-sans text-sm tracking-wide uppercase">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-3">The Market</h1>
+          <p className="text-custom-black/60 max-w-2xl mx-auto">
             Curated Selection of Organic Goods
           </p>
         </div>

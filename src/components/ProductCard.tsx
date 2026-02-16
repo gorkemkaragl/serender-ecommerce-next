@@ -9,16 +9,24 @@ import Link from "next/link";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
 import { useWishlistStore } from "@/store/wishlist-store";
+import { useEffect, useState } from "react";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  // MOUNT KONTROLÜ İÇİN STATE
+    const [isMounted, setIsMounted] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, hasItem } = useWishlistStore();
 
-  const isFavorite = hasItem(product.id); // Bu ürün favoride mi?
+  // COMPONENT YÜKLENDİĞİNDE MOUNTED'I TRUE YAP
+    useEffect(() => {
+      setIsMounted(true);
+    }, []);
+  // Sunucuda ve ilk render'da 'false', sonrasında store'daki gerçek değer
+  const isFavorite = isMounted ? hasItem(product.id) : false; //bu ürün favorilerde mi?
 
   // Favori Butonu Tıklama Fonksiyonu
   const toggleFavorite = (e: React.MouseEvent) => {
@@ -38,6 +46,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       });
     }
   };
+
+  
 
   // Sepete Ekleme Fonksiyonu
   const handleAddToCart = (e: React.MouseEvent) => {

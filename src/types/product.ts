@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export interface Product {
   id: string;
   categoryId: string;
@@ -16,4 +18,5 @@ export interface Category {
   id: string;
   name: string;
   slug: string; // URL'de kullanmak için (örn: 'sut-urunleri')
+  icon: LucideIcon; // Kategori ikonunun URL'si veya sınıf adı
 }

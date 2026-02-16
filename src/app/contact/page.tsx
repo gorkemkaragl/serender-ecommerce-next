@@ -33,14 +33,14 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-secondary pb-20 pt-10 px-6">
+    <div className="min-h-screen bg-secondary pb-20 pt-12 px-6">
       
       {/* BAŞLIK */}
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">
           Get in Touch
         </h1>
-        <p className="text-custom-black/60 max-w-xl mx-auto">
+        <p className="text-custom-black/60 max-w-2xl mx-auto">
           Have a question about our organic products or your order? We're here to help.
         </p>
       </div>

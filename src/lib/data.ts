@@ -1,14 +1,15 @@
 import { Category, Product } from "@/types/product";
+import { Apple, Carrot, Coffee, Croissant, Egg, Milk, Wheat } from "lucide-react";
 
 export const CATEGORIES: Category[] = [
-  { id: "c1", name: "Vegetables", slug: "vegetables" },
-  { id: "c2", name: "Fruits", slug: "fruits" },
-  { id: "c3", name: "Breakfast", slug: "breakfast" },
-  { id: "c4", name: "Dairy", slug: "dairy" },
-  { id: "c5", name: "Bakery", slug: "bakery" },
-  { id: "c6", name: "Snacks", slug: "snacks" },
-  { id: "c7", name: "Beverages", slug: "beverages" },
-  { id: "c8", name: "Pantry", slug: "pantry" },
+  { id: "c1", name: "Vegetables", slug: "vegetables" ,icon: Carrot},
+  { id: "c2", name: "Fruits", slug: "fruits",icon:Apple },
+  { id: "c3", name: "Breakfast", slug: "breakfast",icon:Milk },
+  { id: "c4", name: "Dairy", slug: "dairy",icon:Egg },
+  { id: "c5", name: "Bakery", slug: "bakery",icon:Croissant },
+  { id: "c6", name: "Snacks", slug: "snacks",icon:Apple },
+  { id: "c7", name: "Beverages", slug: "beverages",icon:Coffee },
+  { id: "c8", name: "Pantry", slug: "pantry",icon:Wheat },
 ];
 
 export const PRODUCTS: Product[] = [

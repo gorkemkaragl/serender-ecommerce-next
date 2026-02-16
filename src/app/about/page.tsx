@@ -8,7 +8,7 @@ export default function AboutPage() {
     <div className="bg-secondary min-h-screen pb-20">
       
       {/* HERO BÖLÜMÜ */}
-      <section className="relative py-20 md:py-32 px-6 text-center max-w-4xl mx-auto">
+      <section className="relative py-20 md:py-32 px-6 text-center max-w-4xl mx-auto ">
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary mb-6 leading-tight">
           We believe in <br />
           <span className="italic">real food.</span>
@@ -65,7 +65,7 @@ export default function AboutPage() {
       </section>
 
       {/* DEĞERLERİMİZ (Kartlar) */}
-      <section className="bg-white py-20 mb-24">
+      <section className=" py-20 mb-24 border-t-2 border-dashed border-b-2 border-primary/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Why Choose GX Food?</h2>
