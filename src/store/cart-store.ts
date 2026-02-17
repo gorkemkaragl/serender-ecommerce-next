@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware"; // Veriyi localStorage'a kaydeder
-import { Product } from "@/types/product";
+import { Product } from "@/types";
 
 // Sepetteki ürünün tipi (Normal üründen farkı: 'quantity' ekliyoruz)
 export interface CartItem extends Product {

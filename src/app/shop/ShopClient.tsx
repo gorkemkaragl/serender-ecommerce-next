@@ -5,7 +5,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
-import { Category, ProductWithCategory } from "@/types/product";
+import { Category, ProductWithCategory } from "@/types";
 
 interface ShopClientProps {
   dbProducts: ProductWithCategory[]; // Veritabanından gelen ürünler

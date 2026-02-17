@@ -15,8 +15,8 @@ import {
 import CartSheet from "../common/CartSheet";
 import SearchButton from "../common/SearchButton";
 import WishlistSheet from "../common/WishlistSheet";
-import { Category, Product } from "@/types/product"; // Veya "@/types/index"
-import { getIconByName } from "@/lib/utils"; // 1. BU İMPORTU EKLE
+import { Category, Product } from "@/types"; 
+import { getIconByName } from "@/lib/utils";
 
 interface HeaderProps {
   categories: Category[];
@@ -114,10 +114,10 @@ export default function Header({ categories, dbProducts }: HeaderProps) {
                     <Button className="w-full">Sign In</Button>
                   </div>
                   
-                  {/* MOBİL KATEGORİLER (DÜZELTİLDİ) */}
+                  {/* MOBİL KATEGORİLER */}
                   <div className="flex flex-col py-8 border-t border-primary/20">
                     {categories.map((cat) => {
-                      // 2. STRING İSMİ COMPONENT'E ÇEVİRİYORUZ
+                      // STRING İSMİ COMPONENT'E ÇEVİRİYORUZ
                       const Icon = getIconByName(cat.icon); 
                       
                       return (
@@ -127,7 +127,6 @@ export default function Header({ categories, dbProducts }: HeaderProps) {
                           className="flex items-center gap-2 group relative text-xs md:text-sm font-semibold tracking-tight text-gray-600 transition-all duration-300 hover:text-primary mb-3"
                         >
                           <div className="p-1.5 rounded-full bg-secondary text-custom-black/60 group-hover:bg-primary group-hover:text-white transition-colors">
-                             {/* 3. ARTIK BÜYÜK HARFLE 'Icon' OLARAK KULLANIYORUZ */}
                              <Icon size={16} /> 
                           </div>
                           <span className="relative z-10">{cat.name}</span>
@@ -158,7 +157,6 @@ export default function Header({ categories, dbProducts }: HeaderProps) {
                     className="flex items-center gap-1 group relative px-2 py-4 text-xs md:text-sm font-semibold tracking-tight transition-all duration-300 hover:text-primary"
                   >
                     <div className="p-1.5 rounded-full group-hover:bg-primary group-hover:text-white transition-colors">
-                       {/* 5. BÜYÜK HARFLE KULLANIM */}
                       <Icon size={16} />
                     </div>
                     <span>{cat.name}</span>

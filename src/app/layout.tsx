@@ -5,7 +5,6 @@ import Header from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/layout/Footer";
 import { Leaf } from "lucide-react";
-import { get } from "http";
 import { getAllCategories, getAllProducts } from "@/services/product";
 
 const inter = Inter({

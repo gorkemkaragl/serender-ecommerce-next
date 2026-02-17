@@ -14,7 +14,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
-import { Category, Product } from "@/types/product";
+import { Category, Product } from "@/types";
 import { getIconByName } from "@/lib/utils";
 
 interface SearchButtonProps {

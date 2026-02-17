@@ -1,4 +1,4 @@
-import { Product, ProductWithCategory } from "@/types/product";
+import { Product, ProductWithCategory } from "@/types";
 import ProductCard from "@/components/products/ProductCard";
 
 interface RelatedProductsProps {

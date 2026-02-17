@@ -1,5 +1,5 @@
 import ProductCard from "@/components/products/ProductCard";
-import { Product } from "@/types/product";
+import { Product } from "@/types";
 import Link from "next/link";
 
 

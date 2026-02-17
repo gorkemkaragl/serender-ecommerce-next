@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Product } from "@/types/product";
+import { Product } from "@/types";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
