@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/sonner";
-import Footer from "@/components/Footer";
+import Footer from "@/components/layout/Footer";
 import { Leaf } from "lucide-react";
 
 const inter = Inter({

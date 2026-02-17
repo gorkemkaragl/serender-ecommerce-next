@@ -1,6 +1,6 @@
-import Features from "@/components/Features";
-import Hero from "@/components/Hero";
-import ProductList from "@/components/ProductList";
+import Features from "@/components/home/Features";
+import Hero from "@/components/home/Hero";
+import ProductList from "@/components/products/ProductList";
 import { PRODUCTS } from "@/lib/data";
 import { Product } from "@/types/product";
 import { Leaf } from "lucide-react";

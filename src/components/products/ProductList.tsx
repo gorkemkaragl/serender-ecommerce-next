@@ -1,6 +1,5 @@
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types/product";
-import { Button } from "./ui/button";
 import Link from "next/link";
 
 interface ProductListProps {
@@ -8,6 +7,7 @@ interface ProductListProps {
   products: Product[];
 }
 
+// anasayfada altta 4 ürün göstermek için kullanacağız.
 export default function ProductList({ title, products }: ProductListProps) {
   return (
     <section className="max-w-7xl mx-auto px-6 py-12">

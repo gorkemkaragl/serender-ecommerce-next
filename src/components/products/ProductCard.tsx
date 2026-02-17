@@ -15,6 +15,7 @@ interface ProductCardProps {
   product: Product;
 }
 
+//Ürün Kartı Bileşeni: Ürün listelerinde ve benzer ürünlerde kullanacağız
 export default function ProductCard({ product }: ProductCardProps) {
   // MOUNT KONTROLÜ İÇİN STATE
     const [isMounted, setIsMounted] = useState(false);

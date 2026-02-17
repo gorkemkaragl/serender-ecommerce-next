@@ -10,7 +10,6 @@ import {
   Settings,
   User,
   Rocket,
-  Command as CommandIcon,
 } from "lucide-react";
 
 import {

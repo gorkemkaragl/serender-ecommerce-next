@@ -9,8 +9,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Heart, Minus, Plus, ShoppingBag } from "lucide-react";
-import ProductActions from "@/components/ProductActions";
-import RelatedProducts from "@/components/RelatedProducts";
+import ProductActions from "@/components/products/ProductActions";
+import RelatedProducts from "@/components/products/RelatedProducts";
 import {
   Breadcrumb,
   BreadcrumbItem,

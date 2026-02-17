@@ -12,6 +12,7 @@ interface ProductActionsProps {
   product: Product;
 }
 
+// Ürün Detay Sayfasındaki Eylemler: Miktar seçimi, sepete ekleme, favorilere ekleme
 export default function ProductActions({ product }: ProductActionsProps) {
   // MOUNT KONTROLÜ İÇİN STATE
   const [isMounted, setIsMounted] = useState(false);

@@ -1,11 +1,12 @@
 import { Product } from "@/types/product";
 import { PRODUCTS } from "@/lib/data";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/products/ProductCard";
 
 interface RelatedProductsProps {
   currentProduct: Product;
 }
 
+// Benzer ürünleri gösteren bileşen: ürün detay sayfası altında kullanacağız
 export default function RelatedProducts({ currentProduct }: RelatedProductsProps) {
   
   // FİLTRELEME MANTIĞI

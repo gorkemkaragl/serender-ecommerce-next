@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { PRODUCTS, CATEGORIES } from "@/lib/data";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/products/ProductCard";
 import { Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";

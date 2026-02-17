@@ -4,11 +4,27 @@ import Image from "next/image";
 import { useWishlistStore } from "@/store/wishlist-store";
 import { useCartStore } from "@/store/cart-store";
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Heart, Trash2, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 export default function WishlistSheet() {
   const { items, removeItem, clearWishlist } = useWishlistStore();
@@ -17,12 +33,12 @@ export default function WishlistSheet() {
   // Favoriden Sepete Taşıma Fonksiyonu
   const handleMoveToCart = (product: any) => {
     addItemToCart(product);
-    toast("Moved to Cart 🛒",{
+    toast("Moved to Cart 🛒", {
       description: `${product.name} is now in your cart.`,
       style: {
-          background: "var(--primary)",
-          color: "var(--primary-foreground)",
-        },
+        background: "var(--primary)",
+        color: "var(--primary-foreground)",
+      },
     });
   };
 
@@ -31,8 +47,8 @@ export default function WishlistSheet() {
       <SheetTrigger asChild>
         <div className="relative cursor-pointer group">
           <Button variant="ghost" size="icon" aria-label="Favorites">
-              <Heart className="h-5 w-5" />
-            </Button>
+            <Heart className="h-5 w-5" />
+          </Button>
           {items.length > 0 && (
             <span className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
               {items.length}
@@ -43,9 +59,11 @@ export default function WishlistSheet() {
 
       <SheetContent className="w-full sm:w-100 flex flex-col bg-secondary overflow-y-auto px-6">
         <SheetHeader className="flex flex-row justify-between items-center border-b border-custom-black/5 pb-4 mb-4">
-          <SheetTitle className="font-serif text-2xl text-primary">Your Wishlist</SheetTitle>
+          <SheetTitle className="font-serif text-2xl text-primary">
+            Your Wishlist
+          </SheetTitle>
           {items.length > 0 && (
-                        <AlertDialog>
+            <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="ghost" size="icon-sm">
                   <Trash2 size={16} />
@@ -84,33 +102,47 @@ export default function WishlistSheet() {
             </div>
           ) : (
             items.map((item) => (
-              <div key={item.id} className="flex gap-4 items-center bg-white p-3 rounded-xl shadow-sm">
+              <div
+                key={item.id}
+                className="flex gap-4 items-center bg-white p-3 rounded-xl shadow-sm"
+              >
                 {/* Resim */}
                 <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-secondary shrink-0">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
 
                 {/* Bilgiler */}
                 <div className="flex-1 flex flex-col items-center">
-                  <h4 className="font-serif text-custom-black text-sm line-clamp-1">{item.name}</h4>
-                  <p className="text-primary font-bold text-sm">${item.price}</p>
-                  
+                  <h4 className="font-serif text-custom-black text-sm line-clamp-1">
+                    {item.name}
+                  </h4>
+                  <p className="text-primary font-bold text-sm">
+                    ${item.price}
+                  </p>
+
                   {/* Sepete Ekle Butonu */}
                   <Button
                     onClick={() => handleMoveToCart(item)}
                     variant="link"
                     size="xs"
-                    >
+                  >
                     <ShoppingBag size={12} /> Move to Cart
                   </Button>
-                  
                 </div>
 
                 {/* Sil Butonu */}
-                <Button variant="ghost" size="icon-sm" onClick={() => removeItem(item.id)}>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => removeItem(item.id)}
+                >
                   <Trash2 size={16} />
                 </Button>
-
               </div>
             ))
           )}

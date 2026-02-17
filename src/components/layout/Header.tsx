@@ -12,10 +12,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import CartSheet from "./CartSheet";
-import WishlistSheet from "./WishlistSheet";
+import CartSheet from "../common/CartSheet";
 import { CATEGORIES } from "@/lib/data";
-import SearchButton from "./SearchButton";
+import SearchButton from "../common/SearchButton";
+import WishlistSheet from "../common/WishlistSheet";
 
 export default function Header() {
   const pathname = usePathname();
