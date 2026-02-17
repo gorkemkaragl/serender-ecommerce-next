@@ -2,15 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import {
-  Search,
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  User,
-  Rocket,
-} from "lucide-react";
+import { Search, Settings, User, Rocket } from "lucide-react";
 
 import {
   CommandDialog,
@@ -22,9 +14,18 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
-import { PRODUCTS, CATEGORIES } from "@/lib/data";
+import { Category, Product } from "@/types/product";
+import { getIconByName } from "@/lib/utils";
 
-export default function SearchButton() {
+interface SearchButtonProps {
+  categories: Category[]; // Kategorileri içeren prop
+  dbProducts: Product[]; // Tüm ürünleri içeren prop
+}
+
+export default function SearchButton({
+  categories,
+  dbProducts,
+}: SearchButtonProps) {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -78,27 +79,30 @@ export default function SearchButton() {
 
           {/* GRUP 1: KATEGORİLER */}
           <CommandGroup heading="Categories">
-            {CATEGORIES.map((category) => (
-              <CommandItem
-                key={category.id}
-                value={category.name} // Arama yaparken bu metne bakacak
-                onSelect={() => {
-                  runCommand(() =>
-                    router.push(`/shop?category=${category.id}`),
-                  );
-                }}
-              >
-                <category.icon className="mr-2 h-4 w-4" />
-                <span>{category.name}</span>
-              </CommandItem>
-            ))}
+            {categories.map((category) => {
+              const Icon = getIconByName(category.icon);
+              return (
+                <CommandItem
+                  key={category.id}
+                  value={category.name} // Arama yaparken bu metne bakacak
+                  onSelect={() => {
+                    runCommand(() =>
+                      router.push(`/shop?category=${category.id}`),
+                    );
+                  }}
+                >
+                  <Icon className="mr-2 h-4 w-4" />
+                  <span>{category.name}</span>
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
 
           <CommandSeparator />
 
           {/* GRUP 2: ÜRÜNLER */}
           <CommandGroup heading="Products">
-            {PRODUCTS.map((product) => (
+            {dbProducts.map((product) => (
               <CommandItem
                 key={product.id}
                 value={product.name}

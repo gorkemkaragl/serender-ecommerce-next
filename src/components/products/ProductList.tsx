@@ -2,6 +2,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types/product";
 import Link from "next/link";
 
+
 interface ProductListProps {
   title: string;
   products: Product[];

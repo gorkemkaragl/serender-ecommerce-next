@@ -1,13 +1,11 @@
 import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import ProductList from "@/components/products/ProductList";
-import { PRODUCTS } from "@/lib/data";
-import { Product } from "@/types/product";
-import { Leaf } from "lucide-react";
+import { getFeaturedProducts } from "@/services/product";
 // Sadece ilk 4 ürünü alıyoruz
-const featuredProducts = PRODUCTS.slice(0, 4);
 
-export default function Home() {
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts();
   return (
     <div className="pb-20">
       

@@ -5,6 +5,8 @@ import Header from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/layout/Footer";
 import { Leaf } from "lucide-react";
+import { get } from "http";
+import { getAllCategories, getAllProducts } from "@/services/product";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,15 +26,18 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const categories = await getAllCategories(); // Kategorileri al (Header için)
+  const products =await getAllProducts(); // Tüm ürünleri al (Header için) 
   return (
     <html lang="en">
       <body className={`${inter.variable} ${dmSerif.variable} antialiased`}>
-        <Header />
+        <Header categories={categories} dbProducts={products} />
         
         <main className="min-h-screen">
           {/* Dekoratif Arka Plan (Hafif Yaprak Deseni) */}

@@ -1,16 +1,16 @@
-import { Product } from "@/types/product";
-import { PRODUCTS } from "@/lib/data";
+import { Product, ProductWithCategory } from "@/types/product";
 import ProductCard from "@/components/products/ProductCard";
 
 interface RelatedProductsProps {
   currentProduct: Product;
+  dbProducts: ProductWithCategory[]; 
 }
 
 // Benzer ürünleri gösteren bileşen: ürün detay sayfası altında kullanacağız
-export default function RelatedProducts({ currentProduct }: RelatedProductsProps) {
+export default function RelatedProducts({ currentProduct, dbProducts }: RelatedProductsProps) {
   
   // FİLTRELEME MANTIĞI
-  const relatedProducts = PRODUCTS.filter((product) => {
+  const relatedProducts = dbProducts.filter((product) => {
     //  Aynı kategoride olsun
     const isSameCategory = product.categoryId === currentProduct.categoryId;
     //  Kendisi olmasın (ID kontrolü)

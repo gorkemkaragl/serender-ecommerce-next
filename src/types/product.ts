@@ -1,22 +1,11 @@
-import { LucideIcon } from "lucide-react";
+import { InferSelectModel } from 'drizzle-orm';
+import { categories, products } from '@/db/schema'; // Şema dosyanın yolu
 
-export interface Product {
-  id: string;
-  categoryId: string;
-  slug: string;
-  name: string;
-  price: number;
-  weight: string;     
-  image: string;      
-  isNew?: boolean;    
-  description?: string; 
-  ingredients?: string[]; 
-}
+// Otomatik Çıkarım
+export type Category = InferSelectModel<typeof categories>;
+export type Product = InferSelectModel<typeof products>;
 
-// Kategori Tipi
-export interface Category {
-  id: string;
-  name: string;
-  slug: string; // URL'de kullanmak için (örn: 'sut-urunleri')
-  icon: LucideIcon; // Kategori ikonunun URL'si veya sınıf adı
-}
+// İlişkili Tip (Bunu yine elle ekliyoruz veya extend ediyoruz)
+export type ProductWithCategory = Product & {
+  category: Category | null;
+};

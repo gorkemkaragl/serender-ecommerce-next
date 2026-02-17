@@ -1,14 +1,11 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { PRODUCTS } from "@/lib/data";
-import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Heart, Minus, Plus, ShoppingBag } from "lucide-react";
 import ProductActions from "@/components/products/ProductActions";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import {
@@ -20,6 +17,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import { getAllProducts } from "@/services/product";
 
 //  Fonksiyonu 'async' yapıyoruz
 //  params tipini Promise olarak güncelliyoruz
@@ -28,12 +26,14 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const dbProducts = await getAllProducts();
+
   //  Parametreleri await ediyoruz
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
   //  Slug ile ürünü buluyoruz
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const product = dbProducts.find((p) => p.slug === slug);
 
   // Eğer ürün yoksa 404 sayfasına gönder
   if (!product) {
@@ -61,7 +61,6 @@ export default async function ProductDetailPage({
 
         {/* SAĞ TARAF: DETAYLAR */}
         <div className="flex flex-col justify-center space-y-6">
-          
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -108,8 +107,7 @@ export default async function ProductDetailPage({
                   Box Contents
                 </AccordionTrigger>
                 <AccordionContent className="text-custom-black/70">
-                  {product.ingredients?.join(", ") ||
-                    "Standard ingredients included."}
+                  {product.ingredients || "Standard ingredients included."}
                 </AccordionContent>
               </AccordionItem>
 
@@ -125,7 +123,7 @@ export default async function ProductDetailPage({
           </div>
         </div>
       </div>
-      <RelatedProducts currentProduct={product}></RelatedProducts>
+      <RelatedProducts currentProduct={product} dbProducts={dbProducts}></RelatedProducts>
     </div>
   );
 }
