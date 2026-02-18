@@ -6,7 +6,9 @@ import { Toaster } from "@/components/ui/sonner";
 import Footer from "@/components/layout/Footer";
 import { Leaf } from "lucide-react";
 import { getAllCategories, getAllProducts } from "@/services/product";
-
+import { createClient } from "@/lib/supabase/server";
+import {  Playfair_Display } from "next/font/google"; // Fontların
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -31,28 +33,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const categories = await getAllCategories(); // Kategorileri al (Header için)
-  const products =await getAllProducts(); // Tüm ürünleri al (Header için) 
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${dmSerif.variable} antialiased`}>
-        <Header categories={categories} dbProducts={products} />
-        
-        <main className="min-h-screen">
-          {/* Dekoratif Arka Plan (Hafif Yaprak Deseni) */}
-        <div className="absolute z-1 top-40 left-0 w-full h-full opacity-5 pointer-events-none">
-          <div className="absolute top-10 left-10 transform -rotate-12">
-            <Leaf size={100} />
-          </div>
-          <div className="absolute bottom-10 right-10 transform rotate-45">
-            <Leaf size={150} />
-          </div>
-          
-        </div>
-          {children}
-          <Toaster />
-        </main>
-        <Footer />
+      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
+        {/* BURADA HEADER YOK! */}
+        {children}
+        <Toaster />
       </body>
     </html>
   );

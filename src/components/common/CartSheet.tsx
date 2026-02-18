@@ -51,7 +51,7 @@ export default function CartSheet() {
       <SheetContent className="w-full sm:w-100 flex flex-col bg-secondary overflow-y-auto px-6">
         <SheetHeader className="flex flex-row justify-between items-center border-b border-primary/10 ">
           <SheetTitle className="font-serif text-2xl text-primary">
-            Your Cart
+            Sepetin
           </SheetTitle>
 
           {/* Eğer sepette ürün varsa "Clear Cart" butonu göster */}
@@ -64,7 +64,7 @@ export default function CartSheet() {
               </AlertDialogTrigger>
               <AlertDialogContent className="bg-white border-none rounded-xl">
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Clear Shopping Cart?</AlertDialogTitle>
+                  <AlertDialogTitle>Sepeti Temizlemek istiyor musun?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This will remove{" "}
                     <span className="font-bold text-red-500">all items</span>{" "}
@@ -73,13 +73,13 @@ export default function CartSheet() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel className="border-none bg-gray-100">
-                    Cancel
+                    İptal
                   </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={clearCart} // Tüm sepeti temizle
                     className="bg-red-500 hover:bg-red-600 text-white"
                   >
-                    Yes, Clear All
+                    Evet, Hepsini Sil
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -91,7 +91,7 @@ export default function CartSheet() {
           {items.length === 0 ? (
             <div className="text-center text-custom-black/50 mt-10">
               <ShoppingBag size={48} className="mx-auto mb-4 opacity-20" />
-              <p>Your cart is empty.</p>
+              <p>Sepetiniz boş.</p>
             </div>
           ) : (
             items.map((item) => (
@@ -143,7 +143,7 @@ export default function CartSheet() {
                       </AlertDialogTrigger>
                       <AlertDialogContent className="bg-white border-none rounded-xl">
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Remove Item?</AlertDialogTitle>
+                          <AlertDialogTitle>Ürünü Silmek istiyor musun?</AlertDialogTitle>
                           <AlertDialogDescription>
                             Are you sure you want to remove{" "}
                             <span className="font-bold text-primary">
@@ -154,13 +154,13 @@ export default function CartSheet() {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel className="border-none bg-gray-100">
-                            Cancel
+                            İptal
                           </AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => removeItem(item.id)}
                             className="bg-red-500 hover:bg-red-600 text-white"
                           >
-                            Remove
+                            Sil
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>

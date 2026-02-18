@@ -26,6 +26,15 @@ export const products = pgTable('products', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+// Bu tablo Supabase Auth ile senkronize çalışacak
+export const profiles = pgTable('profiles', {
+  id: uuid('id').primaryKey(), // Auth tablosundaki ID ile aynı olacak (Foreign Key)
+  firstName: text('first_name').notNull(),
+  lastName: text('last_name').notNull(),
+  phone: text('phone').notNull(),
+  email: text('email').notNull(), // Kolaylık olsun diye buraya da koyuyoruz
+  createdAt: timestamp('created_at').defaultNow(),
+});
 // --- 3. İLİŞKİLER (RELATIONS) ---
 // Bu kısım Drizzle'ın "query" yaparken tabloları birbirine bağlamasını sağlar.
 

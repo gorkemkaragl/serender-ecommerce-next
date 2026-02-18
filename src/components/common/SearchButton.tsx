@@ -58,7 +58,7 @@ export default function SearchButton({
         className="hidden md:flex items-center gap-2 w-42 rounded-full text-black/50 transition-colors "
       >
         <Search size={16} />
-        <span>Search products...</span>
+        <span>Ürünleri Ara</span>
       </Button>
 
       {/* 2. MOBİL GÖRÜNÜMÜ (Sadece İkon) */}
@@ -128,13 +128,13 @@ export default function SearchButton({
               onSelect={() => runCommand(() => router.push("/about"))}
             >
               <User className="mr-2 h-4 w-4" />
-              <span>About Us</span>
+              <span>Hakkımızda</span>
             </CommandItem>
             <CommandItem
               onSelect={() => runCommand(() => router.push("/contact"))}
             >
               <Settings className="mr-2 h-4 w-4" />
-              <span>Contact</span>
+              <span>İletişim</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>

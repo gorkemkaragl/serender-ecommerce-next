@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Menu } from "lucide-react";
+import { User as SupabaseUser } from "@supabase/supabase-js";
+import { User, Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -17,21 +18,23 @@ import SearchButton from "../common/SearchButton";
 import WishlistSheet from "../common/WishlistSheet";
 import { Category, Product } from "@/types"; 
 import { getIconByName } from "@/lib/utils";
+import { signout } from "@/app/(auth)/login/actions";
 
 interface HeaderProps {
   categories: Category[];
   dbProducts: Product[]; 
+  user: SupabaseUser | null;
 }
 
-export default function Header({ categories, dbProducts }: HeaderProps) {
+export default function Header({ categories, dbProducts, user }: HeaderProps) {
   const pathname = usePathname();
   const isShopPage = pathname === "/shop";
   
   const navLinks = [
-    { name: "Shop", href: "/shop" },
-    { name: "Delivery", href: "/delivery" },
-    { name: "About us", href: "/about" },
-    { name: "Contact us", href: "/contact" },
+    { name: "Market", href: "/shop" },
+    { name: "Sipariş", href: "/delivery" },
+    { name: "Hakkımızda", href: "/about" },
+    { name: "İletişim", href: "/contact" },
   ];
 
   return (
@@ -46,17 +49,44 @@ export default function Header({ categories, dbProducts }: HeaderProps) {
             Free shipping over $50
           </p>
 
+          {/* SAĞ TARAF: KULLANICI KONTROLÜ */}
           <div className="flex items-center gap-4 md:gap-6">
-            <div className="flex items-center gap-2">
-              <Link href="/login" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity font-medium">
-                <User size={12} />
-                <span>Log In</span>
-              </Link>
-              <span className="opacity-30">|</span>
-              <Link href="/register" className="hover:opacity-80 transition-opacity font-medium">
-                Sign Up
-              </Link>
-            </div>
+            
+            {user ? (
+              /* --- DURUM 1: KULLANICI GİRİŞ YAPMIŞ --- */
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5 font-medium opacity-90">
+                  <User size={12} />
+                  {/* E-postayı göster (Mobil için istersen gizle) */}
+                  <span className="hidden sm:inline">{user.email}</span>
+                </div>
+                
+                <span className="opacity-30">|</span>
+
+                {/* ÇIKIŞ BUTONU (Form içinde olmalı çünkü Server Action) */}
+                <form action={signout}>
+                    <button type="submit" className="flex items-center gap-1.5 hover:text-red-200 transition-colors font-medium cursor-pointer">
+                        <LogOut size={12} />
+                        <span>Çıkış Yap</span>
+                    </button>
+                </form>
+              </div>
+            ) : (
+              /* --- DURUM 2: GİRİŞ YAPMAMIŞ (ESKİ HALİ) --- */
+              <div className="flex items-center gap-2">
+                <Link href="/login" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity font-medium">
+                  <User size={12} />
+                  <span>Giriş Yap</span>
+                </Link>
+
+                <span className="opacity-30">|</span>
+
+                <Link href="/register" className="hover:opacity-80 transition-opacity font-medium">
+                  Kayıt Ol
+                </Link>
+              </div>
+            )}
+
           </div>
         </div>
       </div>
@@ -66,7 +96,7 @@ export default function Header({ categories, dbProducts }: HeaderProps) {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* LOGO */}
           <Link href="/" className="text-3xl font-serif font-bold text-primary cursor-default ">
-            Serender House
+            Serender Evi
           </Link>
 
           {/* DESKTOP MENU */}
