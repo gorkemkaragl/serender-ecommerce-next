@@ -8,9 +8,10 @@ import { getAllCategories, getAllProducts } from "@/services/product";
 import { createClient } from "@/lib/supabase/server";
 
 
+import { getUserWishlistProducts } from "@/app/actions/wishlist";
+import WishlistSync from "@/components/common/WishlistSync";
 
-
-export default async function RootLayout({
+export default async function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -21,8 +22,14 @@ export default async function RootLayout({
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+
+  const wishlistProducts = await getUserWishlistProducts();
+
   return (
     <div>
+      {/* GÖRÜNMEZ SENKRONİZASYON BİLEŞENİ */}
+      {/* dbWishlist adıyla prop olarak gönderiyoruz */}
+      <WishlistSync dbWishlist={wishlistProducts} /> 
  <Header  user={user} categories={categories} dbProducts={products} />
         
         <main className="min-h-screen">

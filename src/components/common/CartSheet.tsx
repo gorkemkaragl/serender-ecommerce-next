@@ -22,8 +22,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 export default function CartSheet() {
+  const router = useRouter();
   const {
     items,
     removeItem,
@@ -33,8 +37,25 @@ export default function CartSheet() {
     clearCart,
   } = useCartStore();
 
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCheckout = async () => {
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      // Oturum yoksa uyarıyı aç
+      setShowLoginAlert(true);
+    } else {
+      // Oturum varsa menüyü kapat ve ödeme sayfasına yönlendir
+      setIsOpen(false);
+      router.push("/checkout"); 
+    }
+  };
   return (
-    <Sheet>
+    <>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <div className="relative cursor-pointer group">
           <Button variant="ghost" size="icon" aria-label="Cart">
@@ -192,12 +213,35 @@ export default function CartSheet() {
               <span>Total:</span>
               <span>${totalPrice().toFixed(2)}</span>
             </div>
-            <Button className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold tracking-wide">
+            <Button className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold tracking-wide"
+            onClick={handleCheckout}>
               Checkout
             </Button>
           </div>
         )}
       </SheetContent>
     </Sheet>
+    <AlertDialog open={showLoginAlert} onOpenChange={setShowLoginAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Giriş Yapmanız Gerekiyor</AlertDialogTitle>
+            <AlertDialogDescription>
+              Siparişinizi tamamlamak ve ödeme adımına geçmek için lütfen üye girişi yapın. Sepetinizdeki ürünler kaybolmayacaktır.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Alışverişe Dön</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={() => {
+                setIsOpen(false); // Alert'e basınca arkadaki sepet menüsünü de kapat
+                router.push("/login");
+              }}
+            >
+              Giriş Yap / Kayıt Ol
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

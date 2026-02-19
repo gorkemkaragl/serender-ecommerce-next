@@ -62,7 +62,7 @@ export async function signup(prevState: FormState, formData: FormData): Promise<
   });
 
   if (existingPhone) {
-    return { message: "This phone number is already in use." };
+    return { message: "Bu telefon numarası zaten kullanılıyor." };
   }
 
   // 2. KAYIT İŞLEMİ
@@ -83,7 +83,7 @@ export async function signup(prevState: FormState, formData: FormData): Promise<
 
     // Supabase'in "User already registered" hatasını yakala
     if (error.message.includes("User already registered") || error.code === "user_already_exists") {
-       userMessage = "This email is already registered.";
+       userMessage = "Bu email adresi zaten kayıtlı."; 
     }
 
     return { message: userMessage }
@@ -93,10 +93,10 @@ export async function signup(prevState: FormState, formData: FormData): Promise<
   redirect('/')
 }
 
-// --- LOGOUT (Aynı kalabilir ama Server Action olduğu için buraya koyduk) ---
+// --- LOGOUT  ---
 export async function signout() {
   const supabase = await createClient()
   await supabase.auth.signOut()
   revalidatePath('/', 'layout')
-  redirect('/login')
+  redirect('/')
 }

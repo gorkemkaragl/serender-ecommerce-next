@@ -35,6 +35,15 @@ export const profiles = pgTable('profiles', {
   email: text('email').notNull(), // Kolaylık olsun diye buraya da koyuyoruz
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+// Favori ürünler tablosu (Wishlist)
+export const wishlists = pgTable('wishlists', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').notNull(), // Hangi kullanıcı?
+  productId: uuid('product_id').references(() => products.id).notNull(), // Hangi ürün?
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
 // --- 3. İLİŞKİLER (RELATIONS) ---
 // Bu kısım Drizzle'ın "query" yaparken tabloları birbirine bağlamasını sağlar.
 
@@ -48,5 +57,13 @@ export const productsRelations = relations(products, ({ one }) => ({
   category: one(categories, {
     fields: [products.categoryId],
     references: [categories.id],
+  }),
+}));
+
+// Profil -> Çoklu Favori (Wishlist)
+export const wishlistsRelations = relations(wishlists, ({ one }) => ({
+  product: one(products, {
+    fields: [wishlists.productId],
+    references: [products.id],
   }),
 }));

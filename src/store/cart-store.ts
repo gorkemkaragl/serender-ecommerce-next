@@ -82,7 +82,7 @@ export const useCartStore = create<CartState>()(
       // Toplam Fiyat Hesaplama
       totalPrice: () => {
         return get().items.reduce(
-          (total, item) => total + item.price * item.quantity,
+          (total, item) => total + Number(item.price) * item.quantity,
           0,
         );
       },
