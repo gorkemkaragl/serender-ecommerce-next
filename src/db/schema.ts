@@ -1,4 +1,4 @@
-import { pgTable, text, uuid, numeric, boolean, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, text, uuid, numeric, boolean, timestamp, integer } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 // --- 1. KATEGORİ TABLOSU ---
@@ -44,6 +44,25 @@ export const wishlists = pgTable('wishlists', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+export const orders = pgTable('orders', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').notNull(), // Siparişi kim verdi? (Supabase Auth ID)
+  status: text('status').default('pending').notNull(), // pending, processing, shipped, delivered
+  totalAmount: numeric('total_amount').notNull(), // Toplam ödenen tutar
+  address: text('address').notNull(), // Teslimat adresi
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// --- 9. SİPARİŞ İÇERİĞİ TABLOSU (ORDER ITEMS) ---
+// Bir siparişin içinde birden fazla ürün olabileceği için ayrı tabloda tutulur.
+export const orderItems = pgTable('order_items', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  orderId: uuid('order_id').references(() => orders.id).notNull(), // Hangi siparişe ait?
+  productId: uuid('product_id').references(() => products.id).notNull(), // Hangi ürün alındı?
+  quantity: integer('quantity').notNull(), // Kaç adet alındı?
+  price: numeric('price').notNull(), // O anki fiyatı (Ürün yarın zamlanırsa eski siparişin fiyatı değişmesin diye buraya da yazıyoruz)
+});
+
 // --- 3. İLİŞKİLER (RELATIONS) ---
 // Bu kısım Drizzle'ın "query" yaparken tabloları birbirine bağlamasını sağlar.
 
@@ -64,6 +83,21 @@ export const productsRelations = relations(products, ({ one }) => ({
 export const wishlistsRelations = relations(wishlists, ({ one }) => ({
   product: one(products, {
     fields: [wishlists.productId],
+    references: [products.id],
+  }),
+}));
+
+export const ordersRelations = relations(orders, ({ many }) => ({
+  items: many(orderItems),
+}));
+
+export const orderItemsRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, {
+    fields: [orderItems.orderId],
+    references: [orders.id],
+  }),
+  product: one(products, {
+    fields: [orderItems.productId],
     references: [products.id],
   }),
 }));

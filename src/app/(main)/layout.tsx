@@ -10,6 +10,9 @@ import { createClient } from "@/lib/supabase/server";
 
 import { getUserWishlistProducts } from "@/app/actions/wishlist";
 import WishlistSync from "@/components/common/WishlistSync";
+import { db } from "@/db";
+import { eq } from "drizzle-orm";
+import { profiles } from "@/db/schema";
 
 export default async function MainLayout({
   children,
@@ -24,13 +27,19 @@ export default async function MainLayout({
   const { data: { user } } = await supabase.auth.getUser();
 
   const wishlistProducts = await getUserWishlistProducts();
+let userProfile = null;
+  if (user) {
+    userProfile = await db.query.profiles.findFirst({
+      where: eq(profiles.id, user.id)
+    });
+  }
 
   return (
     <div>
       {/* GÖRÜNMEZ SENKRONİZASYON BİLEŞENİ */}
       {/* dbWishlist adıyla prop olarak gönderiyoruz */}
       <WishlistSync dbWishlist={wishlistProducts} /> 
- <Header  user={user} categories={categories} dbProducts={products} />
+ <Header userProfile={userProfile} user={user} categories={categories} dbProducts={products}  />
         
         <main className="min-h-screen">
           {/* Dekoratif Arka Plan (Hafif Yaprak Deseni) */}

@@ -24,12 +24,18 @@ interface HeaderProps {
   categories: Category[];
   dbProducts: Product[]; 
   user: SupabaseUser | null;
+  userProfile?: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    phone: string | null;
+  } | null;
 }
 
-export default function Header({ categories, dbProducts, user }: HeaderProps) {
+export default function Header({ categories, dbProducts, user, userProfile }: HeaderProps) {
   const pathname = usePathname();
   const isShopPage = pathname === "/shop";
-  
+
   const navLinks = [
     { name: "Market", href: "/shop" },
     { name: "Sipariş", href: "/delivery" },
@@ -53,12 +59,16 @@ export default function Header({ categories, dbProducts, user }: HeaderProps) {
           <div className="flex items-center gap-4 md:gap-6">
             
             {user ? (
-              /* --- DURUM 1: KULLANICI GİRİŞ YAPMIŞ --- */
+              /* Kullanıcı Giriş Yaptıysa*/
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 font-medium opacity-90">
-                  <User size={12} />
                   {/* E-postayı göster (Mobil için istersen gizle) */}
-                  <span className="hidden sm:inline">{user.email}</span>
+                  <Link href="/account">
+                  <button  className="flex items-center gap-1.5 hover:text-red-200 transition-colors font-medium cursor-pointer">
+                  <User size={12} />
+                    {userProfile?.firstName || user.email?.split('@')[0]}
+                  </button>
+                  </Link>
                 </div>
                 
                 <span className="opacity-30">|</span>
@@ -72,7 +82,7 @@ export default function Header({ categories, dbProducts, user }: HeaderProps) {
                 </form>
               </div>
             ) : (
-              /* --- DURUM 2: GİRİŞ YAPMAMIŞ (ESKİ HALİ) --- */
+              /*  GİRİŞ YAPMAMIŞ HALİ */
               <div className="flex items-center gap-2">
                 <Link href="/login" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity font-medium">
                   <User size={12} />
