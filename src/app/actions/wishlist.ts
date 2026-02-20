@@ -63,3 +63,19 @@ export async function getUserWishlistProducts() {
     return [];
   }
 }
+
+export async function clearUserWishlistDb() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) return { success: false, error: "Kullanıcı girişi yapılmamış." };
+
+  try {
+    // Bu kullanıcıya ait tüm favori kayıtlarını sil
+    await db.delete(wishlists).where(eq(wishlists.userId, user.id));
+    return { success: true };
+  } catch (error) {
+    console.error("Favoriler temizlenirken hata:", error);
+    return { success: false, error: "Bir hata oluştu." };
+  }
+}

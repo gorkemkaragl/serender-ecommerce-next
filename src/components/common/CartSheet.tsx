@@ -87,9 +87,9 @@ export default function CartSheet() {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Sepeti Temizlemek istiyor musun?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will remove{" "}
-                    <span className="font-bold text-red-500">all items</span>{" "}
-                    from your cart. This action cannot be undone.
+                    Bu işlem{" "}
+                    <span className="font-bold text-red-500">tüm ürünleri</span>{" "}
+                    sepetinizden silecek. Bu işlem geri alınamaz.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -144,9 +144,9 @@ export default function CartSheet() {
 
                 {/* KONTROLLER ALANI */}
                 <div className="flex items-center gap-2 bg-white rounded-md p-1 shadow-sm mr-2">
-                  {/* --- MANTIKSAL EKSİ BUTONU --- */}
+                  {/*  MANTIKSAL EKSİ BUTONU  */}
                   {item.quantity > 1 ? (
-                    // DURUM 1: Miktar 1'den büyükse normal azaltma yap
+                    //  Miktar 1'den büyükse normal azaltma yap
                     <Button
                       variant="ghost"
                       size="icon-xs"
@@ -166,11 +166,11 @@ export default function CartSheet() {
                         <AlertDialogHeader>
                           <AlertDialogTitle>Ürünü Silmek istiyor musun?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Are you sure you want to remove{" "}
+                            Sepetinizden{" "}
                             <span className="font-bold text-primary">
                               {item.name}
                             </span>{" "}
-                            from the cart?
+                            ürününü silmek üzeresiniz. Bu işlem geri alınamaz.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -193,7 +193,6 @@ export default function CartSheet() {
                     {item.quantity}
                   </span>
 
-                  {/* Artı Butonu (Her zaman normal çalışır) */}
                   <Button
                     variant="ghost"
                     size="icon-xs"
@@ -210,12 +209,12 @@ export default function CartSheet() {
         {items.length > 0 && (
           <div className="border-t border-primary/20 pt-6 space-y-4 mb-6">
             <div className="flex justify-between items-center text-lg font-bold text-custom-black">
-              <span>Total:</span>
+              <span>Toplam:</span>
               <span>${totalPrice().toFixed(2)}</span>
             </div>
             <Button className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold tracking-wide"
             onClick={handleCheckout}>
-              Checkout
+              Ödeme Adımına Geç
             </Button>
           </div>
         )}

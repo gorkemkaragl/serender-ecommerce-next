@@ -47,7 +47,7 @@ export default async function ProductDetailPage({
         <div className="relative aspect-square rounded-xl overflow-hidden   shadow-2xl shadow-black/70">
           {product.isNew && (
             <span className="absolute top-4 left-4 z-10 bg-primary border border-white/30 text-white px-3 py-1 rounded text-sm font-bold">
-              NEW
+              YENİ
             </span>
           )}
           <Image
@@ -86,7 +86,7 @@ export default async function ProductDetailPage({
               {product.name}
             </h1>
             <p className="text-2xl font-sans font-medium text-custom-black">
-              ${product.price}
+              {product.price} TL
             </p>
           </div>
 
@@ -104,19 +104,19 @@ export default async function ProductDetailPage({
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1" className="border-primary/20">
                 <AccordionTrigger className="font-serif text-lg text-custom-black hover:text-primary hover:no-underline">
-                  Box Contents
+                  Kutu İçeriği
                 </AccordionTrigger>
                 <AccordionContent className="text-custom-black/70">
-                  {product.ingredients || "Standard ingredients included."}
+                  {product.ingredients || "Standart içerikler dahildir."}
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-2" className="border-primary/20">
                 <AccordionTrigger className="font-serif text-lg text-custom-black hover:text-primary hover:no-underline">
-                  Delivery Information
+                  Teslimat Bilgileri
                 </AccordionTrigger>
                 <AccordionContent className="text-custom-black/70">
-                  We deliver within 24 hours for local orders.
+                  Yerel siparişler için 24 saat içinde teslimat yapılır.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

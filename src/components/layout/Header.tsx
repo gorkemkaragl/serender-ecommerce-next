@@ -43,10 +43,10 @@ export default function Header({ categories, dbProducts, user }: HeaderProps) {
       <div className="bg-primary text-white py-2 text-[11px] md:text-xs tracking-wide ">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <p className=" font-medium opacity-90 hidden md:block">
-            Free shipping on orders over <span className="font-bold">$50</span>
+            <span className="font-bold">2000 TL</span> üzeri siparişlerde ücretsiz kargo 
           </p>
           <p className="font-medium opacity-90 md:hidden">
-            Free shipping over $50
+            2000 TL üzeri ücretsiz kargo
           </p>
 
           {/* SAĞ TARAF: KULLANICI KONTROLÜ */}
@@ -127,7 +127,7 @@ export default function Header({ categories, dbProducts, user }: HeaderProps) {
               <SheetContent side="right" className="w-75 sm:w-87.5 p-4">
                 <SheetHeader>
                   <SheetTitle className="font-serif text-2xl text-left text-primary">
-                    Serender House
+                    Serender Evi
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col mt-8 gap-4">
@@ -140,9 +140,7 @@ export default function Header({ categories, dbProducts, user }: HeaderProps) {
                     </div>
                   ))}
 
-                  <div className="mt-4 flex gap-4">
-                    <Button className="w-full">Sign In</Button>
-                  </div>
+                  
                   
                   {/* MOBİL KATEGORİLER */}
                   <div className="flex flex-col py-8 border-t border-primary/20">

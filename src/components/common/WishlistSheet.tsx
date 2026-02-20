@@ -4,16 +4,14 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-
 import { useWishlistStore } from "@/store/wishlist-store";
 import { useCartStore } from "@/store/cart-store";
-
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet"; // SheetTrigger'ı kaldırdık
+} from "@/components/ui/sheet"; 
 import { Button } from "@/components/ui/button";
 import { Heart, Trash2, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
@@ -28,6 +26,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
+import { clearUserWishlistDb, toggleWishlistDb } from "@/app/actions/wishlist";
 
 export default function WishlistSheet() {
   const router = useRouter();
@@ -40,8 +39,8 @@ export default function WishlistSheet() {
 
   const handleMoveToCart = (product: any) => {
     addItemToCart(product);
-    toast("Moved to Cart 🛒", {
-      description: `${product.name} is now in your cart.`,
+    toast("Sepete Taşındı 🛒", {
+      description: `${product.name} sepete taşındı.`,
       style: {
         background: "var(--primary)",
         color: "var(--primary-foreground)",
@@ -49,10 +48,12 @@ export default function WishlistSheet() {
     });
   };
 
-  // 3. YENİ FONKSİYON: Tıklanma anında kontrol yapacak
+  //  Tıklanma anında kontrol yapacak
   const handleOpenWishlist = async () => {
     const supabase = createClient();
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       // Oturum yoksa uyarıyı aç, menüyü açma
@@ -63,21 +64,42 @@ export default function WishlistSheet() {
     }
   };
 
+
+  const handleRemoveItem = async (productId: string) => {
+    // Önce ekrandan anında sil (Optimistic UI)
+    removeItem(productId);
+    
+    // Sonra arka planda veritabanından sil
+    await toggleWishlistDb(productId);
+  };
+
+  // 3. YENİ: TÜMÜNÜ SİLME FONKSİYONU
+  const handleClearAll = async () => {
+    // Önce ekrandan anında sil
+    clearWishlist();
+    
+    // Sonra arka planda veritabanındaki hepsini sil
+    await clearUserWishlistDb();
+  };
+
   return (
     <>
-      {/* 4. SHEET DEĞİŞİKLİĞİ: Kontrolü biz ele aldık (open ve onOpenChange) */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        
-        {/* 5. TRIGGER DEĞİŞİKLİĞİ: Normal bir div'e onClick verdik */}
-        <div 
-          className="relative cursor-pointer group" 
+        <div
+          className="relative cursor-pointer group"
           onClick={handleOpenWishlist}
         >
           {/* İçerideki elementlerin tıklamayı engellememesi için pointer-events-none ekledik */}
-          <Button variant="ghost" size="icon" aria-label="Favorites" type="button" className="pointer-events-none">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Favorites"
+            type="button"
+            className="pointer-events-none"
+          >
             <Heart className="h-5 w-5" />
           </Button>
-          
+
           {items.length > 0 && (
             <span className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center pointer-events-none">
               {items.length}
@@ -88,10 +110,9 @@ export default function WishlistSheet() {
         <SheetContent className="w-full sm:w-100 flex flex-col bg-secondary overflow-y-auto px-6">
           <SheetHeader className="flex flex-row justify-between items-center border-b border-custom-black/5 pb-4 mb-4">
             <SheetTitle className="font-serif text-2xl text-primary">
-              Your Wishlist
+              Favorilerin
             </SheetTitle>
-            
-            {/* Clear All Dialog'u aynen duruyor */}
+
             {items.length > 0 && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -101,22 +122,26 @@ export default function WishlistSheet() {
                 </AlertDialogTrigger>
                 <AlertDialogContent className="bg-white border-none rounded-xl">
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Clear Wishlist ?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                      Tüm Favorileri Silmeye Emin misiniz?
+                    </AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will remove{" "}
-                      <span className="font-bold text-red-500">all items</span>{" "}
-                      from your wishlist. This action cannot be undone.
+                      Bu işlem{" "}
+                      <span className="font-bold text-red-500">
+                        Tüm ürünleri
+                      </span>{" "}
+                      favorilerinden kaldıracaktır. Bu işlem geri alınamaz.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel className="border-none bg-gray-100">
-                      Cancel
+                      İptal
                     </AlertDialogCancel>
                     <AlertDialogAction
-                      onClick={clearWishlist}
+                      onClick={handleClearAll}
                       className="bg-red-500 hover:bg-red-600 text-white"
                     >
-                      Yes, Clear All
+                      Evet, Tümünü Sil
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -128,7 +153,7 @@ export default function WishlistSheet() {
             {items.length === 0 ? (
               <div className="text-center text-custom-black/50 mt-10">
                 <Heart size={48} className="mx-auto mb-4 opacity-20" />
-                <p>Your wishlist is empty.</p>
+                <p>Favorilerin boş.</p>
               </div>
             ) : (
               items.map((item) => (
@@ -158,14 +183,14 @@ export default function WishlistSheet() {
                       variant="link"
                       size="xs"
                     >
-                      <ShoppingBag size={12} /> Move to Cart
+                      <ShoppingBag size={12} /> Sepete Taşı
                     </Button>
                   </div>
 
                   <Button
                     variant="ghost"
                     size="icon-sm"
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => handleRemoveItem(item.id)}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -176,20 +201,19 @@ export default function WishlistSheet() {
         </SheetContent>
       </Sheet>
 
-      {/* 6. YENİ EKLENEN: LOGİN UYARI KUTUSU */}
+      {/*  LOGİN UYARI KUTUSU */}
       <AlertDialog open={showLoginAlert} onOpenChange={setShowLoginAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Giriş Yapmanız Gerekiyor</AlertDialogTitle>
             <AlertDialogDescription>
-              Favorilerinizi görüntülemek veya düzenlemek için lütfen üye girişi yapın.
+              Favorilerinizi görüntülemek veya düzenlemek için lütfen üye girişi
+              yapın.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>İptal</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={() => router.push("/login")}
-            >
+            <AlertDialogAction onClick={() => router.push("/login")}>
               Giriş Yap
             </AlertDialogAction>
           </AlertDialogFooter>

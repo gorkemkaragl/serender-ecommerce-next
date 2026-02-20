@@ -11,9 +11,9 @@ export default function Footer() {
           
           {/* 1. SÜTUN: MARKA & HAKKINDA */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-serif font-bold tracking-wide">GX Food</h2>
+            <h2 className="text-3xl font-serif font-bold tracking-wide">Serender House</h2>
             <p className="text-white/80 text-sm leading-relaxed max-w-xs">
-              Premium food & beverages delivered to your doorstep. Fresh, organic, and reliably sourced from local farmers.
+              En kaliteli yiyecek ve içecekler kapınıza teslim edilir. Taze, organik ve yerel çiftçilerden güvenilir bir şekilde temin edilir.
             </p>
             <div className="flex gap-4 pt-2">
               <Link href="#" className="bg-white/10 p-2 rounded-full hover:bg-accent hover:text-custom-black transition-all">
@@ -30,33 +30,33 @@ export default function Footer() {
 
           {/* 2. SÜTUN: HIZLI LİNKLER */}
           <div>
-            <h3 className="font-serif text-lg font-bold mb-6 text-accent">Quick Links</h3>
+            <h3 className="font-serif text-lg font-bold mb-6 text-accent">Hızlı Linkler</h3>
             <ul className="space-y-4 text-sm text-white/80">
-              <li><Link href="/shop" className="hover:text-white hover:translate-x-1 transition-all inline-block">Shop All</Link></li>
-              <li><Link href="/about" className="hover:text-white hover:translate-x-1 transition-all inline-block">About Us</Link></li>
+              <li><Link href="/shop" className="hover:text-white hover:translate-x-1 transition-all inline-block">Ürünler</Link></li>
+              <li><Link href="/about" className="hover:text-white hover:translate-x-1 transition-all inline-block">Hakkımızda</Link></li>
               <li><Link href="/blog" className="hover:text-white hover:translate-x-1 transition-all inline-block">Blog</Link></li>
-              <li><Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all inline-block">Contact</Link></li>
+              <li><Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all inline-block">İletişim</Link></li>
             </ul>
           </div>
 
           {/* 3. SÜTUN: MÜŞTERİ HİZMETLERİ */}
           <div>
-            <h3 className="font-serif text-lg font-bold mb-6 text-accent">Customer Service</h3>
+            <h3 className="font-serif text-lg font-bold mb-6 text-accent">Müşteri Hizmetleri</h3>
             <ul className="space-y-4 text-sm text-white/80">
               <li><Link href="/faq" className="hover:text-white hover:translate-x-1 transition-all inline-block">FAQ</Link></li>
-              <li><Link href="/shipping" className="hover:text-white hover:translate-x-1 transition-all inline-block">Shipping & Returns</Link></li>
-              <li><Link href="/privacy" className="hover:text-white hover:translate-x-1 transition-all inline-block">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-white hover:translate-x-1 transition-all inline-block">Terms & Conditions</Link></li>
+              <li><Link href="/shipping" className="hover:text-white hover:translate-x-1 transition-all inline-block">Siparişler & İadeler</Link></li>
+              <li><Link href="/privacy" className="hover:text-white hover:translate-x-1 transition-all inline-block">Gizlilik Politikası</Link></li>
+              <li><Link href="/terms" className="hover:text-white hover:translate-x-1 transition-all inline-block">Şartlar & Koşullar</Link></li>
             </ul>
           </div>
 
           {/* 4. SÜTUN: İLETİŞİM & BÜLTEN */}
           <div>
-            <h3 className="font-serif text-lg font-bold mb-6 text-accent">Contact Us</h3>
+            <h3 className="font-serif text-lg font-bold mb-6 text-accent">Bize Ulaşın</h3>
             <ul className="space-y-4 text-sm text-white/80 mb-6">
               <li className="flex items-center gap-3">
                 <MapPin size={16} className="text-accent" />
-                <span>123 Organic St, Berlin, DE</span>
+                <span>Trabzon, TR</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-accent" />
@@ -64,7 +64,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={16} className="text-accent" />
-                <span>hello@gxfood.com</span>
+                <span>gorkemkaragol0@gmail.com</span>
               </li>
             </ul>
 
@@ -72,11 +72,11 @@ export default function Footer() {
             <div className="relative">
               <input 
                 type="email" 
-                placeholder="Your email address" 
+                placeholder="email adresinizi girin" 
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-accent transition-colors"
               />
               <button className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold bg-accent text-custom-black px-3 py-1.5 rounded hover:bg-white transition-colors">
-                Subscribe
+                Abone Ol
               </button>
             </div>
           </div>
@@ -85,9 +85,9 @@ export default function Footer() {
 
         {/* ALT KISIM (COPYRIGHT) */}
         <div className="flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-sans">
-          <p>&copy; {new Date().getFullYear()} GX Food. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Serender. Tüm hakları saklıdır.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
-            <span>Designed for Portfolio</span>
+            <span>Portfolyo için tasarlanmıştır</span>
             <span>•</span>
             <span>Next.js & Tailwind CSS</span>
           </div>

@@ -19,36 +19,36 @@ import { Button } from "@/components/ui/button";
 const HERO_SLIDES = [
   {
     id: 1,
-    title: "Fresh & Organic Food from Farm to Table.",
+    title: "Tarladan Sofranıza Taze ve Organik Gıdalar.",
     description:
-      "Experience the true taste of nature with our daily harvested vegetables and fruits. No chemicals, just pure love.",
+      "Her gün hasat edilen sebze ve meyvelerimizle doğanın gerçek tadını keşfedin. Kimyasal yok, sadece saf emek ve sevgi.",
     image:
       "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop",
-    cta: "Shop Now",
+    cta: "Marketimizi Keşfedin",
     link: "/shop",
-    badge: "100% Organic",
+    badge: "100% doğal",
   },
   {
     id: 2,
-    title: "Delivery to Your Doorstep in 24 Hours.",
+    title: "24 Saat İçinde Kapınıza Teslim.",
     description:
-      "Don't wait for freshness. Order now and get your eco-friendly box delivered by our electric fleet tomorrow.",
+      "Taze ve organik ürünlerinizi bekleyen bir kurye ile kapınıza teslim edilir. Sadece doğanın tadını yaşayın.",
     image:
       "https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // Kurye/Paket görseli
-    cta: "View Delivery",
+    cta: "Teslimatı Görüntüle",
     link: "/delivery",
-    badge: "Fast Shipping",
+    badge: "Hızlı Teslimat",
   },
   {
     id: 3,
-    title: "Weekly Boxes Curated Just for You.",
+    title: "Haftalık Kutular, Sadece Sizin İçin Hazırlanmış.",
     description:
-      "Subscribe to our seasonal boxes and save up to 20%. The best way to eat healthy and support local farmers.",
+      "Sezonluk kutularımıza abone olun ve %20'ye kadar tasarruf edin. Sağlıklı yemek yemek ve yerel çiftçileri desteklemek için en iyi yöntem.",
     image:
       "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop", // Çiftçi/Kutu görseli
-    cta: "Subscribe",
-    link: "/shop?category=boxes",
-    badge: "Save 20%",
+    cta: "Abone Olun",
+    link: "/contact",
+    badge: "Abonelik Kutuları",
   },
 ];
 
@@ -122,7 +122,7 @@ export default function Hero() {
                           size="lg"
                           className="    text-lg font-medium "
                         >
-                          Our Story
+                          Hikayemiz
                         </Button>
                       </Link>
                     </div>
@@ -152,10 +152,10 @@ export default function Hero() {
                       </div>
                       <div>
                         <p className="font-bold text-custom-black text-sm">
-                          100% Fresh
+                          100% Taze
                         </p>
                         <p className="text-xs text-custom-black/50">
-                          Quality Guaranteed
+                          Doğal ve Organik Ürünler
                         </p>
                       </div>
                     </div>

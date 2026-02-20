@@ -4,23 +4,23 @@ import { Sprout, PackageCheck, ShieldCheck, HeartHandshake } from "lucide-react"
 const features = [
   {
     icon: Sprout,
-    title: "100% Natural Production",
-    description: "Grown without synthetic pesticides or GMOs. Just pure, organic goodness straight from the earth.",
+    title: "%100 Doğal Üretim",
+    description: "Kimyasal kullanmadan yetiştirilen ürünlerimizle doğanın gerçek tadını yaşayın.",
   },
   {
     icon: PackageCheck,
-    title: "Seamless Packaging",
-    description: "Eco-friendly, plastic-free packaging designed to keep your food fresh and secure during transit.",
+    title: "Özenli Paketleme",
+    description: "Çevre dostu, plastiksiz ambalajlarımız; ürünlerinizi taşıma sırasında taze ve güvenli şekilde korumak için tasarlanmıştır.",
   },
   {
     icon: ShieldCheck,
-    title: "Quality Guaranteed",
-    description: "If you're not totally satisfied with the freshness, we'll replace it or refund you. No questions asked.",
+    title: "Kalite Garantisi",
+    description: "Taze olmayan ürünlerinizi memnuniyetle değiştirebilir veya iade edebiliriz. Soru sormadan.",
   },
   {
     icon: HeartHandshake,
-    title: "Support Local Farmers",
-    description: "By choosing us, you directly support fair wages and sustainable practices for local communities.",
+    title: "Yerel Çiftçileri Destekleyin",
+    description: "Bizimle seçim yaparak yerel topluluklarda adil ücretler ve sürdürülebilir uygulamaları desteklersiniz.",
   },
 ];
 

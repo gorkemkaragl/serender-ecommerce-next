@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { Search, Settings, User, Rocket } from "lucide-react";
-
 import {
   CommandDialog,
   CommandEmpty,
@@ -49,9 +48,8 @@ export default function SearchButton({
 
   return (
     <>
-      {/* --- TETİKLEYİCİ BUTONLAR --- */}
 
-      {/* 1. DESKTOP GÖRÜNÜMÜ (Şık Input Benzeri Buton) */}
+      {/* DESKTOP GÖRÜNÜMÜ  */}
       <Button
         variant="ghost"
         onClick={() => setOpen(true)}
@@ -61,7 +59,7 @@ export default function SearchButton({
         <span>Ürünleri Ara</span>
       </Button>
 
-      {/* 2. MOBİL GÖRÜNÜMÜ (Sadece İkon) */}
+      {/* MOBİL GÖRÜNÜMÜ  */}
       <Button
         size="icon"
         variant="ghost"
@@ -77,7 +75,7 @@ export default function SearchButton({
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
 
-          {/* GRUP 1: KATEGORİLER */}
+          {/*  KATEGORİLER */}
           <CommandGroup heading="Categories">
             {categories.map((category) => {
               const Icon = getIconByName(category.icon);
@@ -100,7 +98,7 @@ export default function SearchButton({
 
           <CommandSeparator />
 
-          {/* GRUP 2: ÜRÜNLER */}
+          {/* ÜRÜNLER */}
           <CommandGroup heading="Products">
             {dbProducts.map((product) => (
               <CommandItem
@@ -122,7 +120,7 @@ export default function SearchButton({
 
           <CommandSeparator />
 
-          {/* GRUP 3: SAYFALAR (Hızlı Erişim) */}
+          {/*  SAYFALAR (Hızlı Erişim) */}
           <CommandGroup heading="Pages">
             <CommandItem
               onSelect={() => runCommand(() => router.push("/about"))}

@@ -29,7 +29,7 @@ export default function RelatedProducts({ currentProduct, dbProducts }: RelatedP
       {/* Başlık */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary">
-          You might also like
+          Bu Ürünleri de Sevebilirsiniz
         </h2>
         {/* İstersek buraya "View Category" linki de koyabiliriz */}
       </div>

@@ -12,7 +12,7 @@ export default async function Home() {
       <Hero />
       
       <Features />
-      <ProductList title="Top of our Products" products={featuredProducts} />
+      <ProductList products={featuredProducts} />
     </div>
   );
 }

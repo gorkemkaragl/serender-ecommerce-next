@@ -68,8 +68,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       removeFromWishlist(product.id);
     } else {
       addToWishlist(product);
-      toast("Added to Wishlist ❤️", {
-        description: `${product.name} saved for later.`,
+      toast("Favorilere Eklendi ❤️", {
+        description: `${product.name} sonrası için favorilere eklendi!`,
         style: {
           background: "var(--primary)",
           color: "var(--primary-foreground)",
@@ -99,12 +99,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     addItem(product);
 
-    toast.success("Item added to cart!", {
+    toast.success("Ürün Sepete Eklendi!", {
       style: {
         background: "var(--primary)",
         color: "var(--primary-foreground)",
       },
-      description: `${product.name} has been added to your cart.`,
+      description: `${product.name} sepetinize eklendi.`,
       duration: 3000,
     });
   };
@@ -143,7 +143,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Etiket (Eğer ürün yeniyse) */}
             {product.isNew && (
               <span className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wide">
-                New
+                YENİ
               </span>
             )}
           </Link>
@@ -156,7 +156,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </h3>
             <span className="font-sans font-semibold text-primary">
-              ${product.price}
+              {product.price} TL
             </span>
           </div>
 
@@ -168,7 +168,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* AKSİYON BUTONU */}
         <CardFooter className="p-0 mt-4">
           <Button variant="default" onClick={handleAddToCart}>
-            Add to Cart <ShoppingBag size={20} />
+            Sepete Ekle <ShoppingBag size={20} />
           </Button>
         </CardFooter>
       </Card>
