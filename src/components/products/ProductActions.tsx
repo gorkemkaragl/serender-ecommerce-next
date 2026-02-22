@@ -39,8 +39,8 @@ export default function ProductActions({ product }: ProductActionsProps) {
       removeFromWishlist(product.id);
     } else {
       addToWishlist(product);
-      toast("Added to Wishlist ❤️", {
-        description: `${product.name} saved for later.`,
+      toast("Favorilere eklendi. ❤️", {
+        description: `${product.name} ürününü kaydettiniz.`,
         style: {
           background: "var(--primary)",
           color: "var(--primary-foreground)",
@@ -60,12 +60,12 @@ export default function ProductActions({ product }: ProductActionsProps) {
   const handleAddToCart = () => {
     addItem(product, count);
 
-    toast.success("Item added to cart!", {
+    toast.success("Ürün sepete eklendi!", {
       style: {
         background: "var(--primary)",
         color: "var(--primary-foreground)",
       },
-      description: `${product.name} has been added to your cart.`,
+      description: `${product.name} ürününü sepetinize eklediniz.`,
       duration: 3000,
     });
 
@@ -100,7 +100,7 @@ export default function ProductActions({ product }: ProductActionsProps) {
         onClick={handleAddToCart}
         className="flex-1  gap-2 shadow-md hover:shadow-lg "
       >
-        Add to Cart <ShoppingBag />
+        Sepete Ekle <ShoppingBag />
       </Button>
 
       {/* FAVORİ BUTONU */}

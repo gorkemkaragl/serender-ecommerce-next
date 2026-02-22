@@ -4,7 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Autoplay from "embla-carousel-autoplay";
-import { ArrowRight, Leaf } from "lucide-react";
+import { ArrowRight, Leaf, Nut } from "lucide-react";
 
 import {
   Carousel,
@@ -61,7 +61,6 @@ export default function Hero() {
   return (
     <section className="bg-secondary relative overflow-hidden md:py-8">
       
-
       <div className=" max-w-7xl mx-auto px-6 py-12 md:py-20 lg:py-0">
         <Carousel
           plugins={[plugin.current]}
@@ -88,7 +87,7 @@ export default function Hero() {
                     </div>
 
                     {/* Başlık */}
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-custom-black leading-[1.1]">
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-custom-black leading-none">
                       {slide.title.split(" ").map((word, i) => (
                         <span
                           key={i}

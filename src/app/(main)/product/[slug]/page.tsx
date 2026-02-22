@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { getAllProducts } from "@/services/product";
+import ProductGallery from "@/components/products/ProductGallery";
 
 //  Fonksiyonu 'async' yapıyoruz
 //  params tipini Promise olarak güncelliyoruz
@@ -44,18 +45,11 @@ export default async function ProductDetailPage({
     <div className="w-full px-6 py-8 md:py-12 max-w-7xl mx-auto">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* SOL TARAF: GÖRSEL */}
-        <div className="relative aspect-square rounded-xl overflow-hidden   shadow-2xl shadow-black/70">
-          {product.isNew && (
-            <span className="absolute top-4 left-4 z-10 bg-primary border border-white/30 text-white px-3 py-1 rounded text-sm font-bold">
-              YENİ
-            </span>
-          )}
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover"
-            priority
+        <div className="md:col-span-1">
+          <ProductGallery 
+            image={product.image} 
+            gallery={product.gallery} 
+            name={product.name} 
           />
         </div>
 

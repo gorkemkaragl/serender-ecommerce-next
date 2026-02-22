@@ -20,6 +20,7 @@ export const products = pgTable('products', {
   weight: text('weight'),
   isNew: boolean('is_new').default(false),
   ingredients: text('ingredients'),
+  gallery: text('gallery').array(),
   // İlişki Alanı (Foreign Key)
   categoryId: text('category_id').references(() => categories.id),
 

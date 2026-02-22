@@ -132,13 +132,25 @@ export default function ProductCard({ product }: ProductCardProps) {
             <Heart fill={isFavorite ? "currentColor" : "none"} />
           </Button>
           <Link href={`/product/${product.slug}`}>
-            {/* Ürün Resmi */}
             <Image
-              src={product.image}
-              alt={product.name}
+            src={product.image}
+            alt={product.name}
+            fill
+            className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+              product.gallery && product.gallery.length > 0 ? "group-hover:opacity-0" : ""
+            }`}
+          />
+
+          {/* İkinci Resim (Hover durumunda ortaya çıkar) */}
+          {product.gallery && product.gallery.length > 0 && (
+            <Image
+              src={product.gallery[0]} // Galerideki ilk resmi al
+              alt={`${product.name} alternate view`}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              // Varsayılan olarak görünmez (opacity-0), hover olunca görünür (opacity-100)
+              className="object-cover absolute inset-0 opacity-0 transition-all duration-750 group-hover:opacity-100 group-hover:scale-105"
             />
+          )}
 
             {/* Etiket (Eğer ürün yeniyse) */}
             {product.isNew && (
