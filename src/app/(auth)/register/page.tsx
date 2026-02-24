@@ -17,7 +17,6 @@ export default function RegisterPage() {
   return (
     <div className="w-full min-h-screen grid lg:grid-cols-2">
       
-      {/* SOL TARAF: GÖRSEL (Bu sefer görseli sola alalım, değişiklik olsun) */}
       <div className="hidden lg:block relative order-2 lg:order-1 bg-secondary/20">
         <Image
           src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2400&auto=format&fit=crop"

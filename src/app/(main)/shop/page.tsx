@@ -2,10 +2,6 @@ import { getAllProducts, getAllCategories } from "@/services/product";
 import { Suspense } from "react";
 import ShopClient from "./ShopClient";
 
-// Veri çekilirken gösterilecek basit bir yükleniyor yazısı (veya Skeleton)
-function LoadingFallback() {
-  return <div className="p-20 text-center text-primary">Loading market...</div>;
-}
 
 export default async function ShopPage() {
   // Veritabanından verileri çek (Server-Side)
@@ -17,7 +13,7 @@ export default async function ShopPage() {
 
   return (
     <div className="bg-secondary min-h-screen">
-       <Suspense fallback={<LoadingFallback />}>
+       <Suspense>
           {/* Verileri Client Bileşenine yolluyoruz */}
           <ShopClient 
             dbProducts={products} 

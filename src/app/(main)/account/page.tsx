@@ -1,14 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { LogOut, Package, User, MapPin, Settings, Mail, Phone, ChevronRight } from "lucide-react";
+import { LogOut, Package, User, MapPin, Settings, Mail, Phone } from "lucide-react";
 import { signout } from "@/app/(auth)/login/actions";
 import { db } from "@/db";
 import { profiles, orders } from "@/db/schema";
-// YENİ İMPORTLAR: desc (Sıralama için)
 import { eq, desc } from "drizzle-orm";
 import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import OrderCard from "@/components/account/OrderCard";
 
 // Next.js 15 kuralı: searchParams bir Promise'dir
