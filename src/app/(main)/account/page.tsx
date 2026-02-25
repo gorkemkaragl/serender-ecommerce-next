@@ -25,28 +25,30 @@ export default async function AccountPage({
   const resolvedParams = await searchParams;
   const currentTab = resolvedParams.tab || "profile";
 
-  // Profil bilgisini çek
-  const userProfile = await db.query.profiles.findFirst({
+ // Dikkat: Başında 'await' yok, sadece promise'i hazırlıyoruz
+  const profilePromise = db.query.profiles.findFirst({
     where: eq(profiles.id, user.id)
   });
 
-  const displayName = userProfile 
-    ? `${userProfile.firstName} ${userProfile.lastName}`
-    : user.email?.split('@')[0];
-
-  // KULLANICININ SİPARİŞLERİNİ ÇEK (İçindeki ürünlerle beraber ve en yeniden eskiye doğru sırala)
-  const userOrders = await db.query.orders.findMany({
-    where: eq(orders.userId, user.id),
-    orderBy: [desc(orders.createdAt)],
-    with: {
-      items: {
+  //  Siparişleri SADECE "orders" sekmesindeysek çekeceğiz!
+  // Eğer profile sekmesindeysek veritabanını hiç yormayıp boş dizi dönüyoruz.
+  const ordersPromise = currentTab === "orders" 
+    ? db.query.orders.findMany({
+        where: eq(orders.userId, user.id),
+        orderBy: [desc(orders.createdAt)],
         with: {
-          product: true, // Siparişin içindeki ürünlerin resmini/adını alabilmek için
+          items: {
+            with: { product: true }
+          }
         }
-      }
-    }
-  });
+      })
+    : Promise.resolve([]); // Orders sekmesinde değilsek anında boş dizi dön
 
+  // paralel olarak her iki promise'i de çözümle
+  const [userProfile, userOrders] = await Promise.all([
+    profilePromise, 
+    ordersPromise
+  ]);
   // Durum renkleri için yardımcı fonksiyon
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -74,7 +76,7 @@ export default async function AccountPage({
                 </div>
                 <div className="overflow-hidden">
                   <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-1">Welcome back,</p>
-                  <p className="font-bold text-gray-900 truncate">{displayName}</p>
+                  <p className="font-bold text-gray-900 truncate">{userProfile?.firstName || user.email?.split('@')[0] || 'Guest'}</p>
                 </div>
               </div>
               

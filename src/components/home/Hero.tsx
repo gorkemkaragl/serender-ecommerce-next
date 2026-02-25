@@ -140,7 +140,7 @@ export default function Hero() {
                         alt={slide.title}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-1000 "
-                        priority={slide.id === 1} // İlk resim hızlı yüklensin
+                        priority 
                       />
                     </div>
 

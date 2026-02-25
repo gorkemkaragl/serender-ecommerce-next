@@ -29,6 +29,7 @@ export default function AboutPage() {
               alt="Farmer holding fresh vegetables"
               fill
               className="object-cover hover:scale-105 transition-transform duration-700"
+              priority
             />
           </div>
 

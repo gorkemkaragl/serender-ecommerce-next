@@ -1,4 +1,4 @@
-import { pgTable, text, uuid, numeric, boolean, timestamp, integer } from 'drizzle-orm/pg-core';
+import { pgTable, text, uuid, numeric, boolean, timestamp, integer,index } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 // --- 1. KATEGORİ TABLOSU ---
@@ -25,6 +25,11 @@ export const products = pgTable('products', {
   categoryId: text('category_id').references(() => categories.id),
 
   createdAt: timestamp('created_at').defaultNow(),
+},(table) => {
+  return {
+    categoryIdx: index('product_category_idx').on(table.categoryId),
+    createdIdx: index('product_created_idx').on(table.createdAt),
+  };
 });
 
 // Bu tablo Supabase Auth ile senkronize çalışacak
@@ -52,6 +57,11 @@ export const orders = pgTable('orders', {
   totalAmount: numeric('total_amount').notNull(), // Toplam ödenen tutar
   address: text('address').notNull(), // Teslimat adresi
   createdAt: timestamp('created_at').defaultNow(),
+},(table)=>{
+  return {
+    userIdx: index('order_user_idx').on(table.userId),
+    
+  };
 });
 
 // --- 9. SİPARİŞ İÇERİĞİ TABLOSU (ORDER ITEMS) ---

@@ -2,8 +2,7 @@ import { getAllProducts, getAllCategories } from "@/services/product";
 import { Suspense } from "react";
 import ShopClient from "./ShopClient";
 
-// ISR: Sayfa 60 saniyede bir yeniden oluşturulsun (Yeni ürünler için) performans artar
-export const revalidate = 60; 
+
 
 export default async function ShopPage() {
   // Veritabanından verileri çek (Server-Side)

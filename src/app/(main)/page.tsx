@@ -2,6 +2,7 @@ import Features from "@/components/home/Features";
 import Hero from "@/components/home/Hero";
 import ProductList from "@/components/products/ProductList";
 import { getFeaturedProducts } from "@/services/product";
+import { Suspense } from "react";
 // Sadece ilk 4 ürünü alıyoruz
 
 export default async function Home() {
@@ -12,7 +13,7 @@ export default async function Home() {
       <Hero />
       
       <Features />
-      <ProductList products={featuredProducts} />
+        <ProductList products={featuredProducts} />
     </div>
   );
 }
