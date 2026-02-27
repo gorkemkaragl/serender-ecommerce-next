@@ -17,7 +17,7 @@ export type FormState = {
   };
 }
 
-// --- LOGIN ACTION ---
+// --- LOGIN  ---
 export async function login(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
 
@@ -40,12 +40,32 @@ export async function login(prevState: FormState, formData: FormData): Promise<F
 
     return { message: userMessage }
   }
+// ---  ROL KONTROLÜ VE YÖNLENDİRME ---
+  //  Giriş yapan kullanıcının bilgilerini al
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  let redirectUrl = '/'; // Varsayılan yönlendirme rotası
+
+  if (user) {
+    //  Veritabanından rolünü çek
+    const userProfile = await db.query.profiles.findFirst({
+      where: eq(profiles.id, user.id),
+      columns: { role: true } 
+    });
+
+    // Eğer admin ise panele, müşteri ise hesabına (veya ana sayfaya) gönder
+    if (userProfile?.role === 'admin') {
+      redirectUrl = '/admin';
+    } else {
+      redirectUrl = '/'; // Normal müşterileri buraya atabilirsin
+    }
+  }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect(redirectUrl) // Dinamik olarak hesaplanan adrese git
 }
 
-// --- SIGNUP ACTION ---
+// --- SIGNUP  ---
 export async function signup(prevState: FormState, formData: FormData): Promise<FormState> {
   const supabase = await createClient()
 
@@ -55,7 +75,7 @@ export async function signup(prevState: FormState, formData: FormData): Promise<
   const lastName = formData.get('lastName') as string
   const phone = formData.get('phone') as string
 
-  // 1. TELEFON KONTROLÜ (Veritabanından)
+  // TELEFON KONTROLÜ (Veritabanından)
   // Supabase Auth email'i otomatik kontrol eder ama telefonu biz etmeliyiz.
   const existingPhone = await db.query.profiles.findFirst({
     where: eq(profiles.phone, phone)
@@ -65,7 +85,7 @@ export async function signup(prevState: FormState, formData: FormData): Promise<
     return { message: "Bu telefon numarası zaten kullanılıyor." };
   }
 
-  // 2. KAYIT İŞLEMİ
+  // KAYIT İŞLEMİ
   const { error } = await supabase.auth.signUp({
     email,
     password,

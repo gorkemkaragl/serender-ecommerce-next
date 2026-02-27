@@ -40,6 +40,14 @@ export const profiles = pgTable('profiles', {
   phone: text('phone').notNull(),
   email: text('email').notNull(), // Kolaylık olsun diye buraya da koyuyoruz
   createdAt: timestamp('created_at').defaultNow(),
+  role: text('role').default('user').notNull(),
+  
+  
+},(table)=>{
+  return {
+    phoneIdx: index('profile_phone_idx').on(table.phone)
+    
+  };
 });
 
 // Favori ürünler tablosu (Wishlist)

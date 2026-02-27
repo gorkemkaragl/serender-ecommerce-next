@@ -28,10 +28,13 @@ export default async function MainLayout({
 
   const wishlistProducts = await getUserWishlistProducts();
 let userProfile = null;
+let isAdmin = false;
   if (user) {
     userProfile = await db.query.profiles.findFirst({
       where: eq(profiles.id, user.id)
     });
+    // Admin kontrolü: kullanıcı profilinde admin flag'ı varsa isAdmin true olur
+    isAdmin = userProfile?.role === 'admin';
   }
 
   return (
@@ -39,7 +42,7 @@ let userProfile = null;
       {/* GÖRÜNMEZ SENKRONİZASYON BİLEŞENİ */}
       {/* dbWishlist adıyla prop olarak gönderiyoruz */}
       <WishlistSync dbWishlist={wishlistProducts} /> 
- <Header userProfile={userProfile} user={user} categories={categories} dbProducts={products}  />
+ <Header userProfile={userProfile} user={user} categories={categories} dbProducts={products} isAdmin={isAdmin} />
         
         <main className="min-h-screen">
           {/* Dekoratif Arka Plan (Hafif Yaprak Deseni) */}

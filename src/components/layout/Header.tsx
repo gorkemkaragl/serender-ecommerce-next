@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { User as SupabaseUser } from "@supabase/supabase-js";
-import { User, Menu, LogOut } from "lucide-react";
+import { User, Menu, LogOut, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -19,6 +19,7 @@ import WishlistSheet from "../common/WishlistSheet";
 import { Category, Product } from "@/types"; 
 import { getIconByName } from "@/lib/utils";
 import { signout } from "@/app/(auth)/login/actions";
+import HeaderLogoutBtn from "../common/HeaderLogoutBtn";
 
 interface HeaderProps {
   categories: Category[];
@@ -30,9 +31,10 @@ interface HeaderProps {
     lastName: string;
     phone: string | null;
   } | null;
+  isAdmin?: boolean;
 }
 
-export default function Header({ categories, dbProducts, user, userProfile }: HeaderProps) {
+export default function Header({ categories, dbProducts, user, userProfile, isAdmin }: HeaderProps) {
   const pathname = usePathname();
   const isShopPage = pathname === "/shop";
 
@@ -57,6 +59,15 @@ export default function Header({ categories, dbProducts, user, userProfile }: He
 
           {/* SAĞ TARAF: KULLANICI KONTROLÜ */}
           <div className="flex items-center gap-4 md:gap-6">
+            {isAdmin && (
+            <Link 
+              href="/admin"
+              className="hidden md:flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-full transition-all shadow-sm border border-slate-700"
+            >
+              <ShieldAlert size={14} className="text-amber-500" />
+              Patron Paneli
+            </Link>
+          )}
             
             {user ? (
               /* Kullanıcı Giriş Yaptıysa*/
@@ -75,10 +86,7 @@ export default function Header({ categories, dbProducts, user, userProfile }: He
 
                 {/* ÇIKIŞ BUTONU (Form içinde olmalı çünkü Server Action) */}
                 <form action={signout}>
-                    <button type="submit" className="flex items-center gap-1.5 hover:text-red-200 transition-colors font-medium cursor-pointer">
-                        <LogOut size={12} />
-                        <span>Çıkış Yap</span>
-                    </button>
+                    <HeaderLogoutBtn />
                 </form>
               </div>
             ) : (

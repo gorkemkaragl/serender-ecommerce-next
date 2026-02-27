@@ -160,7 +160,6 @@ export default async function AccountPage({
             )}
 
             {/* EĞER TAB ORDERS İSE SİPARİŞ GEÇMİŞİNİ GÖSTER */}
-            {/* EĞER TAB ORDERS İSE SİPARİŞ GEÇMİŞİNİ GÖSTER */}
             {currentTab === "orders" && (
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-primary/5 animate-in fade-in slide-in-from-bottom-2">
                 <h2 className="text-xl font-serif font-bold text-gray-900 mb-6">Order History</h2>
